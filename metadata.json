@@ -1,0 +1,6 @@
+{
+  "name": "Morocco Radio Pro",
+  "description": "A modern web application for streaming live Moroccan radio stations, supporting standard streams and HLS formats.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

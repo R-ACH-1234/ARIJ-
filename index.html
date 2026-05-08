@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARIJ RADIO PRO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #050608;
+      color: #e5e7eb;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .station-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .station-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+    .active-glow {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .wave-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 24px;
+    }
+    .wave-bar {
+      width: 3px;
+      background: #10b981;
+      border-radius: 1px;
+      animation: sound-wave 1s infinite ease-in-out alternate;
+    }
+    @keyframes sound-wave {
+      0% { height: 20%; }
+      100% { height: 100%; }
+    }
+    .glow-orb {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+      z-index: 0;
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* Fallback logo style */
+    .fallback-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative Glow -->
+  <div class="glow-orb" style="top: -100px; left: -100px;"></div>
+  <div class="glow-orb" style="bottom: -100px; right: -100px;"></div>
+
+  <div class="flex flex-col md:flex-row h-full w-full relative z-10">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 glass md:border-l border-b md:border-b-0 border-white/10 flex flex-row md:flex-col p-4 md:p-6 shrink-0 overflow-x-auto md:overflow-y-auto hide-scrollbar">
+      <div class="flex items-center gap-3 md:mb-10 shrink-0 ml-6 md:ml-0">
+        <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+          <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+          </svg>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-white whitespace-nowrap">
+          ARIJ RADIO <span class="text-emerald-500">PRO</span>
+        </h1>
+      </div>
+      
+      <nav class="flex md:flex-col gap-4 md:gap-6 text-sm flex-1">
+        <div id="category-tabs" class="flex md:flex-col gap-2 shrink-0">
+          <p class="hidden md:block text-gray-500 uppercase text-[10px] font-bold tracking-widest px-2 mb-2">التصنيفات</p>
+          <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-emerald-500/10 text-emerald-400">
+            <span>الكل</span>
+          </button>
+          <button data-cat="featured" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>مميزة</span>
+          </button>
+          <button data-cat="dini" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>ديني</span>
+          </button>
+          <button data-cat="cities" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>مدن</span>
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 bg-[#050608]/50 md:bg-transparent">
+      <header class="h-16 md:h-20 shrink-0 flex items-center justify-between px-6 md:px-10 border-b border-white/5">
+        <div class="relative w-full md:w-96 max-w-full">
+          <input 
+            type="text" 
+            id="search-input"
+            placeholder="بحث عن إذاعة، مدينة أو نوع..." 
+            class="w-full bg-white/5 border border-white/10 rounded-full py-2 pr-10 pl-4 text-sm focus:outline-none focus:border-emerald-500/50 transition-all text-white placeholder:text-gray-500"
+          >
+          <svg class="w-4 h-4 text-gray-500 absolute right-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        
+        <div class="hidden md:flex items-center gap-4 text-sm font-medium shrink-0 mr-4">
+          <span class="text-emerald-500 flex items-center gap-2">
+            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+            مباشر الآن
+          </span>
+        </div>
+      </header>
+
+      <div class="flex-1 overflow-y-auto p-6 md:p-10 relative">
+        <div id="greeting-card" class="mb-8 p-4 md:p-6 rounded-2xl glass border-emerald-500/30 bg-emerald-500/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
+          <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-transparent to-emerald-500/10"></div>
+          <h2 id="greeting-text" class="text-xl md:text-2xl font-bold text-white relative z-10 text-center tracking-wide"></h2>
+        </div>
+
+        <div class="flex items-center justify-between mb-8">
+          <h2 id="section-title" class="text-2xl font-semibold text-white">جميع الإذاعات</h2>
+        </div>
+
+        <div id="stations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- Stations will be injected here -->
+        </div>
+      </div>
+
+      <!-- Bottom Player -->
+      <footer class="h-20 md:h-24 glass border-t border-white/10 flex items-center px-4 md:px-8 shrink-0 z-20 bg-[#050608]/90">
+        <div id="player-info" class="flex items-center gap-3 md:gap-4 w-1/3 md:w-1/4 min-w-0">
+          <div id="player-logo-container" class="hidden sm:flex w-12 h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
+            <span class="text-gray-500 text-xs">Logo</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <h4 id="player-title" class="text-sm font-bold text-white truncate leading-tight">اختر إذاعة</h4>
+            <p id="player-status" class="text-[10px] text-gray-500 font-medium truncate mt-0.5">جاهز للتشغيل</p>
+          </div>
+        </div>
+
+        <div class="flex-1 flex flex-col items-center justify-center gap-2">
+          <div class="flex items-center gap-4 md:gap-6">
+            <button id="play-btn" class="w-10 h-10 md:w-12 md:h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-white/10 shrink-0 group">
+              <svg id="play-icon" class="w-4 h-4 md:w-5 md:h-5 ml-1 text-black group-hover:text-emerald-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M4 4l12 6-12 6z"></path>
+              </svg>
+              <svg id="pause-icon" class="w-4 h-4 md:w-5 md:h-5 text-black hidden" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="w-full max-w-[200px] md:max-w-md h-1 bg-white/10 rounded-full overflow-hidden relative hidden sm:block">
+            <div id="progress-bar" class="absolute left-0 top-0 h-full bg-emerald-500" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <div class="w-1/3 md:w-1/4 flex items-center justify-end gap-2 md:gap-4 shrink-0">
+          <button id="mute-btn" class="text-gray-500 hover:text-white transition-colors p-1">
+            <svg id="vol-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+            </svg>
+            <svg id="muted-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+            </svg>
+          </button>
+          <div class="w-16 md:w-24 h-5 cursor-pointer relative flex items-center group hidden sm:flex">
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" class="absolute inset-0 w-full opacity-0 cursor-pointer z-10" />
+            <div class="w-full h-1 bg-white/20 rounded-full transition-all flex items-center group-hover:h-1.5 overflow-hidden">
+               <div id="volume-fill" class="h-full bg-white rounded-full pointer-events-none" style="width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+  
+  <audio id="audio-player" style="display: none;"></audio>
+
+  <script>
+    // 1. Data Base
+    const radioStations = [
+      {"title": "MFM Radio", "url": "https://a5.asurahosting.com:7980/radio.mp3", "cat": "featured", "logo": "/mfm.jpg"},
+      {"title": "Medi 1 Radio", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "featured", "logo": "https://www.medi1.com/assets/img/logo_medi1.png"},
+      {"title": "Radio 2M", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_2m/radio_hls_ts_hy217612tge1f21j83/radio_2m-mp4a_130400=1.m3u8", "cat": "featured", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/2M_Maroc_logo.svg"},
+      {"title": "Hit Radio", "url": "https://hitradio-maroc.ice.infomaniak.ch/hitradio-maroc-128.mp3", "cat": "featured", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Radio Mars", "url": "https://radiomars.ice.infomaniak.ch/radiomars-128.mp3", "cat": "featured", "logo": "https://www.radiomars.ma/wp-content/themes/radiomars/images/logo.png"},
+      {"title": "Radio Aswat", "url": "https://aswat.ice.infomaniak.ch/aswat-high.mp3", "cat": "featured", "logo": "https://www.aswat.ma/assets/img/logo.png"},
+      {"title": "Chada FM", "url": "https://edge16.vedge.infomaniak.com/livecast/ik:chadatv/chunklist_.m3u8", "cat": "featured", "logo": "https://www.chadafm.ma/wp-content/uploads/2019/01/logo-chada-fm.png"},
+      {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "dini", "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Logo_Assadissa.png"},
+      {"title": "Cap Radio", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"}
+    ];
+
+    let currentStation = null;
+    let isPlaying = false;
+    let hls = null;
+    const audio = document.getElementById('audio-player');
+
+    // UI Elements
+    const stationsGrid = document.getElementById('stations-grid');
+    const searchInput = document.getElementById('search-input');
+    const catBtns = document.querySelectorAll('.cat-btn');
+    const sectionTitle = document.getElementById('section-title');
+    
+    // Player UI
+    const playBtn = document.getElementById('play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const pauseIcon = document.getElementById('pause-icon');
+    const playerTitle = document.getElementById('player-title');
+    const playerStatus = document.getElementById('player-status');
+    const playerLogoContainer = document.getElementById('player-logo-container');
+    const progressBar = document.getElementById('progress-bar');
+    
+    // Greeting
+    const greetingCard = document.getElementById('greeting-card');
+    const greetingText = document.getElementById('greeting-text');
+
+    // Update Greeting
+    function updateGreeting() {
+      const now = new Date();
+      const hour = now.getHours();
+      const minute = now.getMinutes();
+      const timeInHours = hour + minute / 60;
+      
+      let message = "";
+      if (timeInHours >= 7 && timeInHours <= 12) {
+        message = "أريج كتصبح عليكم ☀️";
+      } else if (timeInHours > 12 && timeInHours <= 19) {
+        message = "أريج كتمسي عليكم 🌅";
+      } else {
+        message = "أريج كتقول ليكم ليلة سعيدة 🌙";
+      }
+      
+      greetingText.textContent = message;
+    }
+    
+    // Image fallback function
+    window.handleImageError = function(img) {
+      const parent = img.parentElement;
+      parent.innerHTML = '<div class="fallback-logo w-full h-full rounded-xl">A</div>';
+    };
+
+    // Render Stations
+    function renderStations(filterCat = 'all', searchQuery = '') {
+      stationsGrid.innerHTML = '';
+      
+      const filtered = radioStations.filter(station => {
+        const matchCat = filterCat === 'all' || station.cat === filterCat;
+        const matchSearch = station.title.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchCat && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        stationsGrid.innerHTML = '<div class="col-span-full py-10 text-center text-gray-500">لم يتم العثور على أي إذاعة.</div>';
+        return;
+      }
+
+      filtered.forEach((station, index) => {
+        const isActive = currentStation && currentStation.title === station.title;
+        const isCurrentlyPlaying = isActive && isPlaying;
+        
+        const card = document.createElement('div');
+        card.className = `station-card glass p-5 rounded-2xl flex flex-col group ${isActive ? 'active-glow border-emerald-500/40 bg-white/[0.05]' : 'border-white/5'}`;
+        card.onclick = () => playStation(station);
+
+        card.innerHTML = `
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="font-bold mb-1 line-clamp-1 text-white">${station.title}</h3>
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white/90 shrink-0 p-1">
+              <img src="${station.logo}" alt="${station.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this)">
+            </div>
+          </div>
+          
+          <div class="mt-auto pt-4 flex items-center justify-between text-[10px] uppercase tracking-tighter font-bold h-6">
+             ${isCurrentlyPlaying ? `
+               <span class="text-emerald-500">جاري التشغيل</span>
+               <div class="wave-container">
+                 <div class="wave-bar" style="animation-delay: 0.1s"></div>
+                 <div class="wave-bar" style="animation-delay: 0.2s"></div>
+                 <div class="wave-bar" style="animation-delay: 0.3s"></div>
+                 <div class="wave-bar" style="animation-delay: 0.4s"></div>
+               </div>
+             ` : isActive ? `
+               <span class="text-emerald-500 animate-pulse">جاري الاتصال...</span>
+             ` : `
+               <span class="text-gray-600 group-hover:text-gray-400 transition-colors">انقر للاستماع</span>
+             `}
+          </div>
+        `;
+        stationsGrid.appendChild(card);
+      });
+    }
+
+    // Play flow
+    function playStation(station) {
+      currentStation = station;
+      isPlaying = false; 
+      updatePlayerUI();
+      renderStations(document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat'), searchInput.value);
+      playerStatus.innerHTML = '<span class="text-emerald-500 animate-pulse">جاري الاتصال...</span>';
+
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+
+      const playCurrent = () => {
+        audio.play().then(() => {
+          isPlaying = true;
+          playerStatus.innerHTML = '<span class="text-emerald-500">بث مباشر متصل</span>';
+          updatePlayerUI();
+          renderStations(document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat'), searchInput.value);
+        }).catch(err => {
+          console.error(err);
+          playerStatus.innerHTML = '<span class="text-red-400">خطأ في التشغيل</span>';
+        });
+      };
+
+      if (station.url.includes('.m3u8')) {
+        if (Hls.isSupported()) {
+          hls = new Hls();
+          hls.loadSource(station.url);
+          hls.attachMedia(audio);
+          hls.on(Hls.Events.MANIFEST_PARSED, playCurrent);
+          hls.on(Hls.Events.ERROR, function(event, data) {
+            if (data.fatal) {
+              playerStatus.innerHTML = '<span class="text-red-400">خطأ في البث</span>';
+            }
+          });
+        } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+          audio.src = station.url;
+          audio.addEventListener('loadedmetadata', playCurrent, { once: true });
+        }
+      } else {
+        audio.src = station.url;
+        playCurrent();
+      }
+    }
+
+    function togglePlay() {
+      if (!currentStation) return;
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        playerStatus.innerHTML = '<span class="text-gray-500">متوقف</span>';
+      } else {
+        audio.play();
+        isPlaying = true;
+        playerStatus.innerHTML = '<span class="text-emerald-500">بث مباشر متصل</span>';
+      }
+      updatePlayerUI();
+      renderStations(document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat'), searchInput.value);
+    }
+
+    function updatePlayerUI() {
+      if (currentStation) {
+        playerTitle.textContent = currentStation.title;
+        playerLogoContainer.innerHTML = `<div class="w-full h-full bg-white/90 p-1 flex"><img src="${currentStation.logo}" alt="${currentStation.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this)"></div>`;
+      }
+      if (isPlaying) {
+        playIcon.classList.add('hidden');
+        pauseIcon.classList.remove('hidden');
+        progressBar.style.animation = "sound-wave 2s infinite linear alternate";
+      } else {
+        playIcon.classList.remove('hidden');
+        pauseIcon.classList.add('hidden');
+        progressBar.style.animation = "none";
+        progressBar.style.width = "0%";
+      }
+    }
+
+    // Event Listeners
+    playBtn.addEventListener('click', togglePlay);
+    
+    searchInput.addEventListener('input', (e) => {
+      const activeCat = document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat');
+      renderStations(activeCat, e.target.value);
+    });
+
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        catBtns.forEach(b => {
+          b.className = b.className.replace('bg-emerald-500/10 text-emerald-400', 'text-gray-400 hover:text-white');
+        });
+        
+        const clickedBtn = e.currentTarget;
+        clickedBtn.className = clickedBtn.className.replace('text-gray-400 hover:text-white', 'bg-emerald-500/10 text-emerald-400');
+        
+        const cat = clickedBtn.getAttribute('data-cat');
+        
+        if (cat === 'all') {
+          sectionTitle.textContent = "جميع الإذاعات";
+          greetingCard.style.display = 'flex';
+        } else {
+          sectionTitle.textContent = clickedBtn.querySelector('span').textContent;
+          greetingCard.style.display = 'none';
+        }
+        
+        renderStations(cat, searchInput.value);
+      });
+    });
+
+    // Volume Control
+    const volumeSlider = document.getElementById('volume-slider');
+    const volumeFill = document.getElementById('volume-fill');
+    const muteBtn = document.getElementById('mute-btn');
+    const volIcon = document.getElementById('vol-icon');
+    const mutedIcon = document.getElementById('muted-icon');
+    
+    let isMuted = false;
+    let currentVolume = 1;
+
+    volumeSlider.addEventListener('input', (e) => {
+      currentVolume = e.target.value;
+      audio.volume = currentVolume;
+      volumeFill.style.width = `${currentVolume * 100}%`;
+      if (currentVolume == 0) {
+        setMuteState(true);
+      } else {
+        setMuteState(false);
+      }
+    });
+
+    muteBtn.addEventListener('click', () => {
+      setMuteState(!isMuted);
+      if (isMuted) {
+        audio.volume = 0;
+        volumeFill.style.width = "0%";
+        volumeSlider.value = 0;
+      } else {
+        audio.volume = currentVolume || 0.5;
+        volumeFill.style.width = `${audio.volume * 100}%`;
+        volumeSlider.value = audio.volume;
+      }
+    });
+
+    function setMuteState(muted) {
+      isMuted = muted;
+      if (muted) {
+        volIcon.classList.add('hidden');
+        mutedIcon.classList.remove('hidden');
+      } else {
+        volIcon.classList.remove('hidden');
+        mutedIcon.classList.add('hidden');
+      }
+    }
+
+    // Init
+    updateGreeting();
+    setInterval(updateGreeting, 60000);
+    greetingCard.style.display = 'flex';
+    renderStations();
+
+  </script>
+</body>
+</html>
