@@ -114,6 +114,10 @@
           <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-red-500/15 text-red-400">
             <span>Tout</span>
           </button>
+          <button data-cat="favorites" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            <span>Favoris</span>
+          </button>
           <button data-cat="featured" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
             <span>En vedette</span>
           </button>
@@ -230,15 +234,17 @@
     // 1. Data Base
     const radioStations = [
       {"title": "MFM Radio", "url": "https://a5.asurahosting.com:7980/radio.mp3", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTkwKIybEDu0PVcGeeqjCre5Ua3m7HqeOrmfywt3txOQ&s"},
-      {"title": "Medi 1 Radio", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "featured", "logo": "https://www.medi1.com/assets/img/logo_medi1.png"},
+      {"title": "Medi 1 Radio", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpbDLS8a3x6mDEgD9nKAVz8Ghceo7LibCEGzBO3Cg99g&s=10"},
       {"title": "Radio 2M", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_2m/radio_hls_ts_hy217612tge1f21j83/radio_2m-mp4a_130400=1.m3u8", "cat": "featured", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/2M_Maroc_logo.svg"},
       {"title": "Hit Radio", "url": "https://hitradio-maroc.ice.infomaniak.ch/hitradio-maroc-128.mp3", "cat": "featured", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
       {"title": "Radio Mars", "url": "https://radiomars.ice.infomaniak.ch/radiomars-128.mp3", "cat": "featured", "logo": "https://www.radiomars.ma/wp-content/themes/radiomars/images/logo.png"},
       {"title": "Radio Aswat", "url": "https://aswat.ice.infomaniak.ch/aswat-high.mp3", "cat": "featured", "logo": "https://www.aswat.ma/assets/img/logo.png"},
       {"title": "Chada FM", "url": "https://edge16.vedge.infomaniak.com/livecast/ik:chadatv/chunklist_.m3u8", "cat": "featured", "logo": "https://www.chadafm.ma/wp-content/uploads/2019/01/logo-chada-fm.png"},
-      {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "dini", "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Logo_Assadissa.png"},
+      {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "dini", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8r0_3_W7Hs4NVzPog2MoNjyAx6L-Mgi1O1iwbZduMPQ&s=10"},
       {"title": "Cap Radio", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"}
     ];
+
+    let favorites = JSON.parse(localStorage.getItem('arij_radio_favorites')) || [];
 
     let currentStation = null;
     let isPlaying = false;
@@ -282,6 +288,21 @@
       
       greetingText.textContent = message;
     }
+
+    // Toggle Favorite
+    window.toggleFavorite = function(e, title) {
+      e.stopPropagation();
+      if (favorites.includes(title)) {
+        favorites = favorites.filter(t => t !== title);
+      } else {
+        favorites.push(title);
+      }
+      localStorage.setItem('arij_radio_favorites', JSON.stringify(favorites));
+      
+      // Re-render currently active tab
+      const activeCat = document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat');
+      renderStations(activeCat, searchInput.value);
+    };
     
     // Image fallback function
     window.handleImageError = function(img, title) {
@@ -296,7 +317,15 @@
       stationsGrid.innerHTML = '';
       
       const filtered = radioStations.filter(station => {
-        const matchCat = filterCat === 'all' || station.cat === filterCat;
+        let matchCat = false;
+        if (filterCat === 'all') {
+          matchCat = true;
+        } else if (filterCat === 'favorites') {
+          matchCat = favorites.includes(station.title);
+        } else {
+          matchCat = station.cat === filterCat;
+        }
+        
         const matchSearch = station.title.toLowerCase().includes(searchQuery.toLowerCase());
         return matchCat && matchSearch;
       });
@@ -309,13 +338,17 @@
       filtered.forEach((station, index) => {
         const isActive = currentStation && currentStation.title === station.title;
         const isCurrentlyPlaying = isActive && isPlaying;
+        const isFavorite = favorites.includes(station.title);
         
         const card = document.createElement('div');
         card.className = `station-card glass p-4 md:p-5 rounded-2xl flex flex-col group ${isActive ? 'active-glow border-red-500/40 bg-white/[0.05]' : 'border-white/5'}`;
         card.onclick = () => playStation(station);
 
         card.innerHTML = `
-          <div class="flex items-center gap-4 mb-3 md:mb-4">
+          <button onclick="toggleFavorite(event, '${station.title.replace(/'/g, "\\'")}')" class="absolute top-3 right-3 md:top-4 md:right-4 p-1.5 rounded-full bg-black/20 hover:bg-black/40 transition-colors z-10 text-white shadow-sm border border-white/5">
+            <svg class="w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'fill-none text-white'} transition-colors" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          </button>
+          <div class="flex items-center gap-4 mb-3 md:mb-4 pr-6">
             <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bg-white/95 shrink-0 p-1.5 shadow-md shadow-black/20">
               <img src="${station.logo}" alt="${station.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${station.title.replace(/'/g, "\\'")}')">
             </div>
