@@ -7,12 +7,12 @@
   "theme_color": "#e5b84b",
   "icons": [
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/8/82/Radio_icon.svg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://upload.wikimedia.org/wikipedia/commons/8/82/Radio_icon.svg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10",
       "sizes": "512x512",
       "type": "image/png"
     }
