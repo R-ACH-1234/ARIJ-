@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,8 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #050608;
+      background: linear-gradient(135deg, #050608 0%, #1a0505 50%, #4a0404 100%);
+      background-attachment: fixed;
       color: #e5e7eb;
       margin: 0;
       height: 100vh;
@@ -33,11 +34,11 @@
     .station-card:hover {
       background: rgba(255, 255, 255, 0.08);
       transform: translateY(-2px);
-      border-color: rgba(16, 185, 129, 0.3);
+      border-color: rgba(225, 29, 72, 0.3);
     }
     .active-glow {
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
-      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 20px rgba(225, 29, 72, 0.15);
+      border-color: rgba(225, 29, 72, 0.4);
       background: rgba(255, 255, 255, 0.05);
     }
     .wave-container {
@@ -48,7 +49,7 @@
     }
     .wave-bar {
       width: 3px;
-      background: #10b981;
+      background: #e11d48;
       border-radius: 1px;
       animation: sound-wave 1s infinite ease-in-out alternate;
     }
@@ -60,7 +61,7 @@
       position: absolute;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.15) 0%, transparent 70%);
       z-index: 0;
       filter: blur(40px);
       pointer-events: none;
@@ -78,10 +79,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-      font-weight: bold;
-      font-size: 1.5rem;
+      background: linear-gradient(135deg, rgba(225, 29, 72, 0.2), rgba(225, 29, 72, 0.05));
+      color: #e11d48;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(225, 29, 72, 0.2);
     }
   </style>
 </head>
@@ -90,107 +94,117 @@
   <div class="glow-orb" style="top: -100px; left: -100px;"></div>
   <div class="glow-orb" style="bottom: -100px; right: -100px;"></div>
 
-  <div class="flex flex-col md:flex-row h-full w-full relative z-10">
+  <div class="flex flex-col md:flex-row h-full w-full relative z-10 overflow-hidden">
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 glass md:border-l border-b md:border-b-0 border-white/10 flex flex-row md:flex-col p-4 md:p-6 shrink-0 overflow-x-auto md:overflow-y-auto hide-scrollbar">
-      <div class="flex items-center gap-3 md:mb-10 shrink-0 ml-6 md:ml-0">
-        <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-          <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <aside class="w-full md:w-64 glass md:border-r border-b md:border-b-0 border-white/10 flex flex-col p-4 md:p-6 shrink-0 overflow-y-auto hide-scrollbar z-20">
+      <div class="flex items-center gap-3 mb-4 md:mb-10 shrink-0">
+        <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/30">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
           </svg>
         </div>
         <h1 class="text-xl font-bold tracking-tight text-white whitespace-nowrap">
-          ARIJ RADIO <span class="text-emerald-500">PRO</span>
+          ARIJ RADIO <span class="text-red-500">PRO</span>
         </h1>
       </div>
       
-      <nav class="flex md:flex-col gap-4 md:gap-6 text-sm flex-1">
-        <div id="category-tabs" class="flex md:flex-col gap-2 shrink-0">
-          <p class="hidden md:block text-gray-500 uppercase text-[10px] font-bold tracking-widest px-2 mb-2">التصنيفات</p>
-          <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-emerald-500/10 text-emerald-400">
-            <span>الكل</span>
+      <nav class="flex flex-col gap-4 md:gap-6 text-sm flex-1">
+        <div id="category-tabs" class="flex flex-row md:flex-col gap-2 shrink-0 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar">
+          <p class="hidden md:block text-gray-500 uppercase text-[10px] font-bold tracking-widest px-2 mb-2">Catégories</p>
+          <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-red-500/15 text-red-400">
+            <span>Tout</span>
           </button>
           <button data-cat="featured" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>مميزة</span>
+            <span>En vedette</span>
           </button>
           <button data-cat="dini" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>ديني</span>
+            <span>Religieux</span>
           </button>
           <button data-cat="cities" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>مدن</span>
+            <span>Villes</span>
           </button>
         </div>
       </nav>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col min-w-0 bg-[#050608]/50 md:bg-transparent">
-      <header class="h-16 md:h-20 shrink-0 flex items-center justify-between px-6 md:px-10 border-b border-white/5">
+    <main class="flex-1 flex flex-col min-w-0 min-h-0 bg-transparent overflow-hidden">
+      <header class="h-16 md:h-20 shrink-0 flex items-center justify-between px-4 md:px-10 border-b border-white/5 space-x-reverse space-x-4">
         <div class="relative w-full md:w-96 max-w-full">
           <input 
             type="text" 
             id="search-input"
-            placeholder="بحث عن إذاعة، مدينة أو نوع..." 
-            class="w-full bg-white/5 border border-white/10 rounded-full py-2 pr-10 pl-4 text-sm focus:outline-none focus:border-emerald-500/50 transition-all text-white placeholder:text-gray-500"
+            placeholder="Rechercher une radio, ville ou genre..." 
+            class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pr-10 pl-4 text-sm focus:outline-none focus:border-red-500/50 transition-all text-white placeholder:text-gray-500"
           >
           <svg class="w-4 h-4 text-gray-500 absolute right-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
         </div>
         
-        <div class="hidden md:flex items-center gap-4 text-sm font-medium shrink-0 mr-4">
-          <span class="text-emerald-500 flex items-center gap-2">
-            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-            مباشر الآن
+        <div class="flex items-center gap-2 md:gap-4 text-xs md:text-sm font-medium shrink-0">
+          <span class="text-red-500 flex items-center gap-2 whitespace-nowrap">
+            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50"></span>
+            <span class="hidden sm:inline">En direct</span>
           </span>
         </div>
       </header>
 
-      <div class="flex-1 overflow-y-auto p-6 md:p-10 relative">
-        <div id="greeting-card" class="mb-8 p-4 md:p-6 rounded-2xl glass border-emerald-500/30 bg-emerald-500/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
-          <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-transparent to-emerald-500/10"></div>
+      <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-10 relative" style="-webkit-overflow-scrolling: touch;">
+        <div id="greeting-card" class="mb-6 md:mb-8 p-4 md:p-6 rounded-2xl glass border-red-500/30 bg-red-500/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
+          <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-red-500/10"></div>
           <h2 id="greeting-text" class="text-xl md:text-2xl font-bold text-white relative z-10 text-center tracking-wide"></h2>
         </div>
 
         <div class="flex items-center justify-between mb-8">
-          <h2 id="section-title" class="text-2xl font-semibold text-white">جميع الإذاعات</h2>
+          <h2 id="section-title" class="text-2xl font-semibold text-white">Toutes les radios</h2>
         </div>
 
-        <div id="stations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div id="stations-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
           <!-- Stations will be injected here -->
         </div>
       </div>
 
       <!-- Bottom Player -->
-      <footer class="h-20 md:h-24 glass border-t border-white/10 flex items-center px-4 md:px-8 shrink-0 z-20 bg-[#050608]/90">
-        <div id="player-info" class="flex items-center gap-3 md:gap-4 w-1/3 md:w-1/4 min-w-0">
-          <div id="player-logo-container" class="hidden sm:flex w-12 h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
-            <span class="text-gray-500 text-xs">Logo</span>
+      <footer class="h-[88px] md:h-24 glass border-t border-white/10 flex items-center px-4 md:px-8 shrink-0 z-20 bg-[#1a0505]/90 backdrop-blur-xl pb-safe">
+        <div id="player-info" class="flex items-center gap-3 w-2/5 md:w-1/4 min-w-0">
+          <div id="player-logo-container" class="flex w-10 h-10 md:w-12 md:h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
+            <span class="text-gray-500 text-[10px] md:text-xs">Logo</span>
           </div>
           <div class="min-w-0 flex-1">
-            <h4 id="player-title" class="text-sm font-bold text-white truncate leading-tight">اختر إذاعة</h4>
-            <p id="player-status" class="text-[10px] text-gray-500 font-medium truncate mt-0.5">جاهز للتشغيل</p>
+            <h4 id="player-title" class="text-xs md:text-sm font-bold text-white truncate leading-tight">Sélectionnez une radio</h4>
+            <p id="player-status" class="text-[9px] md:text-[10px] text-gray-400 font-medium truncate mt-0.5">Prêt à lire</p>
           </div>
         </div>
 
-        <div class="flex-1 flex flex-col items-center justify-center gap-2">
-          <div class="flex items-center gap-4 md:gap-6">
-            <button id="play-btn" class="w-10 h-10 md:w-12 md:h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-white/10 shrink-0 group">
-              <svg id="play-icon" class="w-4 h-4 md:w-5 md:h-5 ml-1 text-black group-hover:text-emerald-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+        <div class="flex-1 flex flex-col items-center justify-center gap-1.5 md:gap-2">
+          <div class="flex items-center gap-3 md:gap-6">
+            <button id="play-btn" class="w-12 h-12 md:w-12 md:h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] shrink-0 group">
+              <svg id="play-icon" class="w-5 h-5 md:w-5 md:h-5 ml-1 text-black group-hover:text-red-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M4 4l12 6-12 6z"></path>
               </svg>
-              <svg id="pause-icon" class="w-4 h-4 md:w-5 md:h-5 text-black hidden" fill="currentColor" viewBox="0 0 20 20">
+              <svg id="pause-icon" class="w-5 h-5 md:w-5 md:h-5 text-black hidden" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"></path>
+              </svg>
+            </button>
+            <button id="stop-btn" class="text-gray-400 hover:text-white transition-colors p-2" title="Arrêter">
+              <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.5 5a.5.5 0 01.5-.5h10a.5.5 0 01.5.5v10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.5V5z" clip-rule="evenodd"></path>
               </svg>
             </button>
           </div>
           
-          <div class="w-full max-w-[200px] md:max-w-md h-1 bg-white/10 rounded-full overflow-hidden relative hidden sm:block">
-            <div id="progress-bar" class="absolute left-0 top-0 h-full bg-emerald-500" style="width: 0%;"></div>
+          <div class="w-full max-w-[150px] md:max-w-md h-1 bg-white/10 rounded-full overflow-hidden relative hidden sm:block">
+            <div id="progress-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-red-600 to-red-400" style="width: 0%;"></div>
           </div>
         </div>
 
-        <div class="w-1/3 md:w-1/4 flex items-center justify-end gap-2 md:gap-4 shrink-0">
+        <div class="w-2/5 md:w-1/4 flex items-center justify-end gap-2 md:gap-4 shrink-0">
+          <button id="sleep-timer-btn" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-red-400 transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" title="Minuterie">
+            <svg id="sleep-timer-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span id="sleep-timer-display" class="font-medium hidden sm:inline-block">Minut.</span>
+          </button>
+          
           <button id="mute-btn" class="text-gray-500 hover:text-white transition-colors p-1">
             <svg id="vol-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
@@ -199,7 +213,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
             </svg>
           </button>
-          <div class="w-16 md:w-24 h-5 cursor-pointer relative flex items-center group hidden sm:flex">
+          <div class="w-16 md:w-24 h-5 cursor-pointer relative flex items-center group">
             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" class="absolute inset-0 w-full opacity-0 cursor-pointer z-10" />
             <div class="w-full h-1 bg-white/20 rounded-full transition-all flex items-center group-hover:h-1.5 overflow-hidden">
                <div id="volume-fill" class="h-full bg-white rounded-full pointer-events-none" style="width: 100%;"></div>
@@ -259,20 +273,22 @@
       
       let message = "";
       if (timeInHours >= 7 && timeInHours <= 12) {
-        message = "أريج كتصبح عليكم ☀️";
+        message = "Bonjour de Arij ☀️";
       } else if (timeInHours > 12 && timeInHours <= 19) {
-        message = "أريج كتمسي عليكم 🌅";
+        message = "Bonsoir de Arij 🌅";
       } else {
-        message = "أريج كتقول ليكم ليلة سعيدة 🌙";
+        message = "Arij vous souhaite une bonne nuit 🌙";
       }
       
       greetingText.textContent = message;
     }
     
     // Image fallback function
-    window.handleImageError = function(img) {
+    window.handleImageError = function(img, title) {
       const parent = img.parentElement;
-      parent.innerHTML = '<div class="fallback-logo w-full h-full rounded-xl">A</div>';
+      const initials = (title || 'A').replace(/radio\s+/i, '').trim().substring(0, 2).toUpperCase();
+      parent.innerHTML = `<div class="fallback-logo w-full h-full rounded-xl">${initials}</div>`;
+      parent.className = parent.className.replace('bg-white/90', '').replace('p-1', ''); // Clean up wrapper styles
     };
 
     // Render Stations
@@ -286,7 +302,7 @@
       });
 
       if (filtered.length === 0) {
-        stationsGrid.innerHTML = '<div class="col-span-full py-10 text-center text-gray-500">لم يتم العثور على أي إذاعة.</div>';
+        stationsGrid.innerHTML = '<div class="col-span-full py-10 text-center text-gray-500">Aucune radio trouvée.</div>';
         return;
       }
 
@@ -295,20 +311,20 @@
         const isCurrentlyPlaying = isActive && isPlaying;
         
         const card = document.createElement('div');
-        card.className = `station-card glass p-5 rounded-2xl flex flex-col group ${isActive ? 'active-glow border-emerald-500/40 bg-white/[0.05]' : 'border-white/5'}`;
+        card.className = `station-card glass p-4 md:p-5 rounded-2xl flex flex-col group ${isActive ? 'active-glow border-red-500/40 bg-white/[0.05]' : 'border-white/5'}`;
         card.onclick = () => playStation(station);
 
         card.innerHTML = `
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="font-bold mb-1 line-clamp-1 text-white">${station.title}</h3>
-            <div class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white/90 shrink-0 p-1">
-              <img src="${station.logo}" alt="${station.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this)">
+          <div class="flex justify-between items-start mb-3 md:mb-4">
+            <h3 class="font-bold mb-1 line-clamp-1 text-white text-sm md:text-base">${station.title}</h3>
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white/90 shrink-0 p-1">
+              <img src="${station.logo}" alt="${station.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${station.title.replace(/'/g, "\\'")}')">
             </div>
           </div>
           
-          <div class="mt-auto pt-4 flex items-center justify-between text-[10px] uppercase tracking-tighter font-bold h-6">
+          <div class="mt-auto pt-3 md:pt-4 flex items-center justify-between text-[9px] md:text-[10px] uppercase tracking-tighter font-bold h-6">
              ${isCurrentlyPlaying ? `
-               <span class="text-emerald-500">جاري التشغيل</span>
+               <span class="text-red-500">En lecture</span>
                <div class="wave-container">
                  <div class="wave-bar" style="animation-delay: 0.1s"></div>
                  <div class="wave-bar" style="animation-delay: 0.2s"></div>
@@ -316,9 +332,9 @@
                  <div class="wave-bar" style="animation-delay: 0.4s"></div>
                </div>
              ` : isActive ? `
-               <span class="text-emerald-500 animate-pulse">جاري الاتصال...</span>
+               <span class="text-red-500 animate-pulse">Connexion...</span>
              ` : `
-               <span class="text-gray-600 group-hover:text-gray-400 transition-colors">انقر للاستماع</span>
+               <span class="text-gray-500 group-hover:text-gray-300 transition-colors">Écouter</span>
              `}
           </div>
         `;
@@ -331,8 +347,8 @@
       currentStation = station;
       isPlaying = false; 
       updatePlayerUI();
-      renderStations(document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat'), searchInput.value);
-      playerStatus.innerHTML = '<span class="text-emerald-500 animate-pulse">جاري الاتصال...</span>';
+      renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
+      playerStatus.innerHTML = '<span class="text-red-500 animate-pulse">Connexion...</span>';
 
       if (hls) {
         hls.destroy();
@@ -346,12 +362,12 @@
       const playCurrent = () => {
         audio.play().then(() => {
           isPlaying = true;
-          playerStatus.innerHTML = '<span class="text-emerald-500">بث مباشر متصل</span>';
+          playerStatus.innerHTML = '<span class="text-red-500">Flux en direct connecté</span>';
           updatePlayerUI();
-          renderStations(document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat'), searchInput.value);
+          renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
         }).catch(err => {
           console.error(err);
-          playerStatus.innerHTML = '<span class="text-red-400">خطأ في التشغيل</span>';
+          playerStatus.innerHTML = '<span class="text-rose-400">Erreur de lecture</span>';
         });
       };
 
@@ -363,7 +379,7 @@
           hls.on(Hls.Events.MANIFEST_PARSED, playCurrent);
           hls.on(Hls.Events.ERROR, function(event, data) {
             if (data.fatal) {
-              playerStatus.innerHTML = '<span class="text-red-400">خطأ في البث</span>';
+              playerStatus.innerHTML = '<span class="text-rose-400">Erreur de flux</span>';
             }
           });
         } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
@@ -381,20 +397,20 @@
       if (isPlaying) {
         audio.pause();
         isPlaying = false;
-        playerStatus.innerHTML = '<span class="text-gray-500">متوقف</span>';
+        playerStatus.innerHTML = '<span class="text-gray-500">Arrêté</span>';
       } else {
         audio.play();
         isPlaying = true;
-        playerStatus.innerHTML = '<span class="text-emerald-500">بث مباشر متصل</span>';
+        playerStatus.innerHTML = '<span class="text-red-500">Flux en direct connecté</span>';
       }
       updatePlayerUI();
-      renderStations(document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat'), searchInput.value);
+      renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
     }
 
     function updatePlayerUI() {
       if (currentStation) {
         playerTitle.textContent = currentStation.title;
-        playerLogoContainer.innerHTML = `<div class="w-full h-full bg-white/90 p-1 flex"><img src="${currentStation.logo}" alt="${currentStation.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this)"></div>`;
+        playerLogoContainer.innerHTML = `<div class="w-full h-full bg-white/90 p-1 flex"><img src="${currentStation.logo}" alt="${currentStation.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${currentStation.title.replace(/'/g, "\\'")}')"></div>`;
       }
       if (isPlaying) {
         playIcon.classList.add('hidden');
@@ -409,26 +425,52 @@
     }
 
     // Event Listeners
+    const stopBtn = document.getElementById('stop-btn');
+
+    stopBtn.addEventListener('click', () => {
+      if (!currentStation) return;
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      isPlaying = false;
+      playerStatus.innerHTML = '<span class="text-gray-500">Arrêté</span>';
+      
+      // Also reset sleep timer when stopped manually
+      if (sleepTimerTarget) {
+        clearInterval(sleepTimerInterval);
+        sleepTimerTarget = null;
+        currentSleepTimerIndex = 0;
+        updateSleepTimerDisplay();
+      }
+
+      updatePlayerUI();
+      renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
+    });
+
     playBtn.addEventListener('click', togglePlay);
     
     searchInput.addEventListener('input', (e) => {
-      const activeCat = document.querySelector('.cat-btn.bg-emerald-500\\/10').getAttribute('data-cat');
+      const activeCat = document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat');
       renderStations(activeCat, e.target.value);
     });
 
     catBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         catBtns.forEach(b => {
-          b.className = b.className.replace('bg-emerald-500/10 text-emerald-400', 'text-gray-400 hover:text-white');
+          b.className = b.className.replace('bg-red-500/15 text-red-400', 'text-gray-400 hover:text-white');
         });
         
         const clickedBtn = e.currentTarget;
-        clickedBtn.className = clickedBtn.className.replace('text-gray-400 hover:text-white', 'bg-emerald-500/10 text-emerald-400');
+        clickedBtn.className = clickedBtn.className.replace('text-gray-400 hover:text-white', 'bg-red-500/15 text-red-400');
         
         const cat = clickedBtn.getAttribute('data-cat');
         
         if (cat === 'all') {
-          sectionTitle.textContent = "جميع الإذاعات";
+          sectionTitle.textContent = "Toutes les radios";
           greetingCard.style.display = 'flex';
         } else {
           sectionTitle.textContent = clickedBtn.querySelector('span').textContent;
@@ -483,6 +525,90 @@
         mutedIcon.classList.add('hidden');
       }
     }
+
+    // Sleep Timer Logic
+    let sleepTimerTarget = null;
+    let sleepTimerInterval = null;
+    const sleepTimerOptions = [0, 15, 30, 45, 60, 90, 120];
+    let currentSleepTimerIndex = 0;
+    
+    const sleepTimerBtn = document.getElementById('sleep-timer-btn');
+    const sleepTimerDisplay = document.getElementById('sleep-timer-display');
+
+    function formatTime(seconds) {
+      if (seconds <= 0) return "00:00";
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      if (h > 0) {
+        return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      }
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateSleepTimerDisplay() {
+      if (!sleepTimerTarget) {
+        if (currentSleepTimerIndex === 0) {
+          sleepTimerDisplay.textContent = "Minut.";
+          sleepTimerBtn.classList.remove('text-red-400', 'bg-red-500/15', 'border-red-500/30');
+          sleepTimerBtn.classList.add('text-gray-500', 'bg-white/5', 'border-white/10');
+          sleepTimerDisplay.classList.remove('inline-block');
+          sleepTimerDisplay.classList.add('hidden', 'sm:inline-block');
+        } else {
+          sleepTimerDisplay.textContent = `${sleepTimerOptions[currentSleepTimerIndex]} min`;
+          sleepTimerBtn.classList.remove('text-gray-500', 'bg-white/5', 'border-white/10');
+          sleepTimerBtn.classList.add('text-red-400', 'bg-red-500/15', 'border-red-500/30');
+          sleepTimerDisplay.classList.remove('hidden', 'sm:inline-block');
+          sleepTimerDisplay.classList.add('inline-block');
+        }
+      } else {
+        const remainingStr = formatTime(Math.max(0, Math.ceil((sleepTimerTarget - Date.now()) / 1000)));
+        sleepTimerDisplay.textContent = remainingStr;
+        sleepTimerBtn.classList.remove('text-gray-500', 'bg-white/5', 'border-white/10');
+        sleepTimerBtn.classList.add('text-red-400', 'bg-red-500/15', 'border-red-500/30');
+        sleepTimerDisplay.classList.remove('hidden', 'sm:inline-block');
+        sleepTimerDisplay.classList.add('inline-block');
+      }
+    }
+
+    sleepTimerBtn.addEventListener('click', () => {
+      // If timer is active, next click resets it (turns it off) or cycles
+      if (sleepTimerTarget) {
+        clearInterval(sleepTimerInterval);
+        sleepTimerTarget = null;
+      }
+      
+      currentSleepTimerIndex = (currentSleepTimerIndex + 1) % sleepTimerOptions.length;
+      
+      if (currentSleepTimerIndex > 0) {
+        const minutes = sleepTimerOptions[currentSleepTimerIndex];
+        sleepTimerTarget = Date.now() + minutes * 60 * 1000;
+        
+        clearInterval(sleepTimerInterval);
+        sleepTimerInterval = setInterval(() => {
+          const remaining = Math.ceil((sleepTimerTarget - Date.now()) / 1000);
+          if (remaining <= 0) {
+            // Timer expired
+            clearInterval(sleepTimerInterval);
+            sleepTimerTarget = null;
+            currentSleepTimerIndex = 0;
+            updateSleepTimerDisplay();
+            
+            // Stop playback
+            if (isPlaying && currentStation) {
+              togglePlay();
+            }
+          } else {
+            updateSleepTimerDisplay();
+          }
+        }, 1000);
+      } else {
+        clearInterval(sleepTimerInterval);
+        sleepTimerTarget = null;
+      }
+      
+      updateSleepTimerDisplay();
+    });
 
     // Init
     updateGreeting();
