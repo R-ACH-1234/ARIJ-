@@ -10,7 +10,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #050608 0%, #1a0505 50%, #4a0404 100%);
+      background: linear-gradient(135deg, #050810 0%, #0a1128 50%, #111a38 100%);
       background-attachment: fixed;
       color: #e5e7eb;
       margin: 0;
@@ -44,11 +44,11 @@
     .station-card:hover {
       background: rgba(255, 255, 255, 0.08);
       transform: translateY(-2px);
-      border-color: rgba(225, 29, 72, 0.3);
+      border-color: rgba(229, 184, 75, 0.3);
     }
     .active-glow {
-      box-shadow: 0 0 20px rgba(225, 29, 72, 0.15);
-      border-color: rgba(225, 29, 72, 0.4);
+      box-shadow: 0 0 20px rgba(229, 184, 75, 0.15);
+      border-color: rgba(229, 184, 75, 0.4);
       background: rgba(255, 255, 255, 0.05);
     }
     .wave-container {
@@ -59,7 +59,7 @@
     }
     .wave-bar {
       width: 3px;
-      background: #e11d48;
+      background: #e5b84b;
       border-radius: 1px;
       animation: sound-wave 1s infinite ease-in-out alternate;
     }
@@ -71,7 +71,7 @@
       position: absolute;
       width: 400px;
       height: 400px;
-      background: radial-gradient(circle, rgba(225, 29, 72, 0.15) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(229, 184, 75, 0.15) 0%, transparent 70%);
       z-index: 0;
       filter: blur(40px);
       pointer-events: none;
@@ -89,13 +89,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, rgba(225, 29, 72, 0.2), rgba(225, 29, 72, 0.05));
-      color: #e11d48;
+      background: linear-gradient(135deg, rgba(229, 184, 75, 0.2), rgba(229, 184, 75, 0.05));
+      color: #e5b84b;
       font-weight: 700;
       font-size: 1.25rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      border: 1px solid rgba(225, 29, 72, 0.2);
+      border: 1px solid rgba(229, 184, 75, 0.2);
     }
   </style>
 </head>
@@ -109,17 +109,17 @@
     <aside class="w-full md:w-64 glass md:border-r border-b md:border-b-0 border-white/10 flex flex-col p-4 md:p-6 shrink-0 overflow-y-auto hide-scrollbar z-20">
       <div class="flex items-center gap-3 mb-4 md:mb-10 shrink-0">
         <div class="w-12 h-12 flex items-center justify-center shrink-0">
-          <img src="https://drive.google.com/uc?export=view&id=1c11GLaVOS5r9PQclCdQCZwDYvPUbx5-7" alt="Logo" class="w-full h-full object-contain drop-shadow-md rounded-xl">
+          <img src="https://f.top4top.io/s_3781y3o7d0.png" alt="Logo" class="w-full h-full object-contain drop-shadow-md rounded-xl">
         </div>
         <h1 class="text-xl font-bold tracking-tight text-white whitespace-nowrap">
-          ARIJ RADIO <span class="text-red-500">PRO</span>
+          ARIJ RADIO <span class="text-[#e5b84b]">PRO</span>
         </h1>
       </div>
       
       <nav class="flex flex-col gap-4 md:gap-6 text-sm flex-1">
         <div id="category-tabs" class="flex flex-row md:flex-col gap-2 shrink-0 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar">
           <p class="hidden md:block text-gray-500 uppercase text-[10px] font-bold tracking-widest px-2 mb-2">Catégories</p>
-          <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-red-500/15 text-red-400">
+          <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-[#e5b84b]/15 text-[#e5b84b]">
             <span>Tout</span>
           </button>
           <button data-cat="favorites" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
@@ -129,11 +129,23 @@
           <button data-cat="featured" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
             <span>En vedette</span>
           </button>
-          <button data-cat="dini" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+          <button data-cat="news" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>Actualités</span>
+          </button>
+          <button data-cat="music" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>Musique</span>
+          </button>
+          <button data-cat="religious" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
             <span>Religieux</span>
           </button>
           <button data-cat="cities" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
             <span>Villes</span>
+          </button>
+          <button data-cat="amazigh" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>Amazigh</span>
+          </button>
+          <button data-cat="sport" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>Sport</span>
           </button>
         </div>
       </nav>
@@ -147,7 +159,7 @@
             type="text" 
             id="search-input"
             placeholder="Rechercher une radio, ville ou genre..." 
-            class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pr-10 pl-4 text-sm focus:outline-none focus:border-red-500/50 transition-all text-white placeholder:text-gray-500"
+            class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pr-10 pl-4 text-sm focus:outline-none focus:border-[#e5b84b]/50 transition-all text-white placeholder:text-gray-500"
           >
           <svg class="w-4 h-4 text-gray-500 absolute right-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -155,16 +167,16 @@
         </div>
         
         <div class="flex items-center gap-2 md:gap-4 text-xs md:text-sm font-medium shrink-0">
-          <span class="text-red-500 flex items-center gap-2 whitespace-nowrap">
-            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50"></span>
+          <span class="text-[#e5b84b] flex items-center gap-2 whitespace-nowrap">
+            <span class="w-2 h-2 bg-[#e5b84b] rounded-full animate-pulse shadow-lg shadow-[#e5b84b]/50"></span>
             <span class="hidden sm:inline">En direct</span>
           </span>
         </div>
       </header>
 
       <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-10 pb-4 md:pb-10 relative" style="-webkit-overflow-scrolling: touch;">
-        <div id="greeting-card" class="mb-6 md:mb-8 p-4 md:p-6 rounded-2xl glass border-red-500/30 bg-red-500/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
-          <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-red-500/10"></div>
+        <div id="greeting-card" class="mb-6 md:mb-8 p-4 md:p-6 rounded-2xl glass border-[#e5b84b]/30 bg-[#e5b84b]/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
+          <div class="absolute inset-0 bg-gradient-to-r from-[#e5b84b]/10 via-transparent to-[#e5b84b]/10"></div>
           <h2 id="greeting-text" class="text-xl md:text-2xl font-bold text-white relative z-10 text-center tracking-wide"></h2>
         </div>
 
@@ -177,7 +189,7 @@
         </div>
       </div>
 
-      <footer class="shrink-0 w-full min-h-[88px] md:min-h-[96px] glass border-t border-white/10 flex items-center px-4 md:px-8 z-50 bg-[#1a0505]/95 backdrop-blur-xl pb-safe">
+      <footer class="shrink-0 w-full min-h-[88px] md:min-h-[96px] glass border-t border-white/10 flex items-center px-4 md:px-8 z-50 bg-[#0a1128]/95 backdrop-blur-xl pb-safe">
         <div id="player-info" class="flex items-center gap-3 w-2/5 md:w-1/4 min-w-0">
           <div id="player-logo-container" class="flex w-10 h-10 md:w-12 md:h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
             <span class="text-gray-500 text-[10px] md:text-xs">Logo</span>
@@ -191,7 +203,7 @@
         <div class="flex-1 flex flex-col items-center justify-center gap-1.5 md:gap-2">
           <div class="flex items-center gap-3 md:gap-6">
             <button id="play-btn" class="w-12 h-12 md:w-12 md:h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] shrink-0 group">
-              <svg id="play-icon" class="w-5 h-5 md:w-5 md:h-5 ml-1 text-black group-hover:text-red-600 transition-colors" fill="currentColor" viewBox="0 0 20 20">
+              <svg id="play-icon" class="w-5 h-5 md:w-5 md:h-5 ml-1 text-black group-hover:text-[#e5b84b] transition-colors" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M4 4l12 6-12 6z"></path>
               </svg>
               <svg id="pause-icon" class="w-5 h-5 md:w-5 md:h-5 text-black hidden" fill="currentColor" viewBox="0 0 20 20">
@@ -206,12 +218,12 @@
           </div>
           
           <div class="w-full max-w-[150px] md:max-w-md h-1 bg-white/10 rounded-full overflow-hidden relative hidden sm:block">
-            <div id="progress-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-red-600 to-red-400" style="width: 0%;"></div>
+            <div id="progress-bar" class="absolute left-0 top-0 h-full bg-gradient-to-r from-[#e5b84b] to-[#c79a32]" style="width: 0%;"></div>
           </div>
         </div>
 
         <div class="w-2/5 md:w-1/4 flex items-center justify-end gap-2 md:gap-4 shrink-0">
-          <button id="sleep-timer-btn" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-red-400 transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" title="Minuterie">
+          <button id="sleep-timer-btn" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" title="Minuterie">
             <svg id="sleep-timer-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span id="sleep-timer-display" class="font-medium hidden sm:inline-block">Minut.</span>
           </button>
@@ -240,15 +252,45 @@
   <script>
     // 1. Data Base
     const radioStations = [
+      // Featured
       {"title": "MFM Radio", "url": "https://a5.asurahosting.com:7980/radio.mp3", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTkwKIybEDu0PVcGeeqjCre5Ua3m7HqeOrmfywt3txOQ&s"},
       {"title": "Medi 1 Radio", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpbDLS8a3x6mDEgD9nKAVz8Ghceo7LibCEGzBO3Cg99g&s=10"},
-      {"title": "Radio 2M", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_2m/radio_hls_ts_hy217612tge1f21j83/radio_2m-mp4a_130400=1.m3u8", "cat": "featured", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/2M_Maroc_logo.svg"},
       {"title": "Hit Radio", "url": "https://hitradio-maroc.ice.infomaniak.ch/hitradio-maroc-128.mp3", "cat": "featured", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
-      {"title": "Radio Mars", "url": "https://radiomars.ice.infomaniak.ch/radiomars-128.mp3", "cat": "featured", "logo": "https://www.radiomars.ma/wp-content/themes/radiomars/images/logo.png"},
+      {"title": "Radio 2M", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_2m/radio_hls_ts_hy217612tge1f21j83/radio_2m-mp4a_130400=1.m3u8", "cat": "featured", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/2M_Maroc_logo.svg"},
+      {"title": "Radio Mars", "url": "https://radiomars.ice.infomaniak.ch/radiomars-128.mp3", "cat": "featured,sport", "logo": "https://www.radiomars.ma/wp-content/themes/radiomars/images/logo.png"},
       {"title": "Radio Aswat", "url": "https://aswat.ice.infomaniak.ch/aswat-high.mp3", "cat": "featured", "logo": "https://www.aswat.ma/assets/img/logo.png"},
       {"title": "Chada FM", "url": "https://edge16.vedge.infomaniak.com/livecast/ik:chadatv/chunklist_.m3u8", "cat": "featured", "logo": "https://www.chadafm.ma/wp-content/uploads/2019/01/logo-chada-fm.png"},
-      {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "dini", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8r0_3_W7Hs4NVzPog2MoNjyAx6L-Mgi1O1iwbZduMPQ&s=10"},
-      {"title": "Cap Radio", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"}
+      {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8r0_3_W7Hs4NVzPog2MoNjyAx6L-Mgi1O1iwbZduMPQ&s=10"},
+      
+      // News
+      {"title": "Medi 1 News", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "news", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpbDLS8a3x6mDEgD9nKAVz8Ghceo7LibCEGzBO3Cg99g&s=10"},
+      {"title": "Radio Maroc News", "url": "https://stream-149.zeno.fm/nefhp3q9fc9uv", "cat": "news", "logo": "https://play-lh.googleusercontent.com/I2d3s6Tnbg-N53c-k6HlZzWj-P0L-Kxh5_QoONs2P82Cszk2u1KkVb9g0qH5fU1HwF0"},
+      {"title": "Atlantic Radio", "url": "https://atlantic-sonic.nindohost.net:9300/stream", "cat": "news", "logo": "https://www.atlanticradio.ma/sites/default/files/logo_atlantic_0.png"},
+      {"title": "RFI Monde", "url": "https://rfimonde64k.ice.infomaniak.ch/rfimonde-64.mp3", "cat": "news", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RFI_logo_2013.svg/1200px-RFI_logo_2013.svg.png"},
+      
+      // Music
+      {"title": "Hit Radio Party", "url": "https://dancefloor.ice.infomaniak.ch/dancefloor-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Hit Radio Urban", "url": "https://rnb.ice.infomaniak.ch/rnb-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Hit Radio Gold", "url": "https://gold.ice.infomaniak.ch/gold-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Radio Only Raï", "url": "https://onlyrai.ice.infomaniak.ch/onlyrai-high.mp3", "cat": "music", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2N4R76qjEqH09v5K2R2O537w93sX1l51L3Q&s"},
+      {"title": "Radio Gnawa", "url": "https://stream-175.zeno.fm/wghcdfwvnc9uv", "cat": "music", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      {"title": "Skyrock Casablanca", "url": "https://icecast.skyrock.net/s/casa_aac_64k", "cat": "music", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Skyrock.svg"},
+      {"title": "Radio Izlan", "url": "https://izlan.fr/radios/atlas/stream", "cat": "music", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      
+      // Religious
+      {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "religious", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8r0_3_W7Hs4NVzPog2MoNjyAx6L-Mgi1O1iwbZduMPQ&s=10"},
+      {"title": "Assadiss", "url": "https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_6/hls_snrt_radio/index.m3u8", "cat": "religious", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      {"title": "Samaa Radio", "url": "https://stream-159.zeno.fm/nezfuswpyjfuv", "cat": "religious", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      
+      // Cities
+      {"title": "Cap Radio (Tanger)", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"},
+      {"title": "Yan Plus (Agadir)", "url": "https://stream-155.zeno.fm/7nqu31p6xg0uv", "cat": "cities", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      {"title": "Radio Nador", "url": "https://stream-158.zeno.fm/cfuk22ssv4zuv", "cat": "cities", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      {"title": "Marrakech Plus", "url": "https://cast5.my-control-panel.com/proxy/marrakec/stream", "cat": "cities", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      
+      // Amazigh
+      {"title": "Radio Al Amazighia", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_amazigh/hls_snrt_radio/index.m3u8", "cat": "amazigh", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
+      {"title": "Radio Atbir", "url": "https://stream-154.zeno.fm/bqdbb6hd0neuv", "cat": "amazigh", "logo": "https://f.top4top.io/s_3781y3o7d0.png"},
     ];
 
     let favorites = JSON.parse(localStorage.getItem('arij_radio_favorites')) || [];
@@ -307,14 +349,14 @@
       localStorage.setItem('arij_radio_favorites', JSON.stringify(favorites));
       
       // Re-render currently active tab
-      const activeCat = document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat');
+      const activeCat = document.querySelector('.cat-btn.bg-[#e5b84b]\\/15').getAttribute('data-cat');
       renderStations(activeCat, searchInput.value);
     };
     
     // Image fallback function
     window.handleImageError = function(img, title) {
       img.onerror = null;
-      img.src = "https://drive.google.com/uc?export=view&id=1c11GLaVOS5r9PQclCdQCZwDYvPUbx5-7";
+      img.src = "https://f.top4top.io/s_3781y3o7d0.png";
     };
 
     // Render Stations
@@ -328,7 +370,7 @@
         } else if (filterCat === 'favorites') {
           matchCat = favorites.includes(station.title);
         } else {
-          matchCat = station.cat === filterCat;
+          matchCat = station.cat.split(',').includes(filterCat);
         }
         
         const matchSearch = station.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -346,12 +388,12 @@
         const isFavorite = favorites.includes(station.title);
         
         const card = document.createElement('div');
-        card.className = `station-card glass p-4 md:p-5 rounded-2xl flex flex-col group ${isActive ? 'active-glow border-red-500/40 bg-white/[0.05]' : 'border-white/5'}`;
+        card.className = `station-card glass p-4 md:p-5 rounded-2xl flex flex-col group ${isActive ? 'active-glow border-[#e5b84b]/40 bg-white/[0.05]' : 'border-white/5'}`;
         card.onclick = () => playStation(station);
 
         card.innerHTML = `
           <button onclick="toggleFavorite(event, '${station.title.replace(/'/g, "\\'")}')" class="absolute top-3 right-3 md:top-4 md:right-4 p-1.5 rounded-full bg-black/20 hover:bg-black/40 transition-colors z-10 text-white shadow-sm border border-white/5">
-            <svg class="w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'fill-none text-white'} transition-colors" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            <svg class="w-4 h-4 ${isFavorite ? 'fill-[#e5b84b] text-[#e5b84b]' : 'fill-none text-white'} transition-colors" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
           </button>
           <div class="flex items-center gap-4 mb-3 md:mb-4 pr-6">
             <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bg-white/95 shrink-0 p-1.5 shadow-md shadow-black/20">
@@ -364,7 +406,7 @@
           
           <div class="mt-auto pt-3 md:pt-4 flex items-center justify-between text-[9px] md:text-[10px] uppercase tracking-tighter font-bold h-6 border-t border-white/5">
              ${isCurrentlyPlaying ? `
-               <span class="text-red-500">En lecture</span>
+               <span class="text-[#e5b84b]">En lecture</span>
                <div class="wave-container">
                  <div class="wave-bar" style="animation-delay: 0.1s"></div>
                  <div class="wave-bar" style="animation-delay: 0.2s"></div>
@@ -372,7 +414,7 @@
                  <div class="wave-bar" style="animation-delay: 0.4s"></div>
                </div>
              ` : isActive ? `
-               <span class="text-red-500 animate-pulse">Connexion...</span>
+               <span class="text-[#e5b84b] animate-pulse">Connexion...</span>
              ` : `
                <span class="text-gray-500 group-hover:text-gray-300 transition-colors">Écouter</span>
              `}
@@ -387,8 +429,8 @@
       currentStation = station;
       isPlaying = false; 
       updatePlayerUI();
-      renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
-      playerStatus.innerHTML = '<span class="text-red-500 animate-pulse">Connexion...</span>';
+      renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
+      playerStatus.innerHTML = '<span class="text-[#e5b84b] animate-pulse">Connexion...</span>';
 
       if (hls) {
         hls.destroy();
@@ -402,9 +444,9 @@
       const playCurrent = () => {
         audio.play().then(() => {
           isPlaying = true;
-          playerStatus.innerHTML = '<span class="text-red-500">Flux en direct connecté</span>';
+          playerStatus.innerHTML = '<span class="text-[#e5b84b]">Flux en direct connecté</span>';
           updatePlayerUI();
-          renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
+          renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
         }).catch(err => {
           console.error(err);
           playerStatus.innerHTML = '<span class="text-rose-400">Erreur de lecture</span>';
@@ -441,10 +483,10 @@
       } else {
         audio.play();
         isPlaying = true;
-        playerStatus.innerHTML = '<span class="text-red-500">Flux en direct connecté</span>';
+        playerStatus.innerHTML = '<span class="text-[#e5b84b]">Flux en direct connecté</span>';
       }
       updatePlayerUI();
-      renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
+      renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
     }
 
     function updatePlayerUI() {
@@ -488,24 +530,24 @@
       }
 
       updatePlayerUI();
-      renderStations(document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat'), searchInput.value);
+      renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
     });
 
     playBtn.addEventListener('click', togglePlay);
     
     searchInput.addEventListener('input', (e) => {
-      const activeCat = document.querySelector('.cat-btn.bg-red-500\\/15').getAttribute('data-cat');
+      const activeCat = document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat');
       renderStations(activeCat, e.target.value);
     });
 
     catBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         catBtns.forEach(b => {
-          b.className = b.className.replace('bg-red-500/15 text-red-400', 'text-gray-400 hover:text-white');
+          b.className = b.className.replace('bg-[#e5b84b]/15 text-[#e5b84b]', 'text-gray-400 hover:text-white');
         });
         
         const clickedBtn = e.currentTarget;
-        clickedBtn.className = clickedBtn.className.replace('text-gray-400 hover:text-white', 'bg-red-500/15 text-red-400');
+        clickedBtn.className = clickedBtn.className.replace('text-gray-400 hover:text-white', 'bg-[#e5b84b]/15 text-[#e5b84b]');
         
         const cat = clickedBtn.getAttribute('data-cat');
         
@@ -590,14 +632,14 @@
       if (!sleepTimerTarget) {
         if (currentSleepTimerIndex === 0) {
           sleepTimerDisplay.textContent = "Minut.";
-          sleepTimerBtn.classList.remove('text-red-400', 'bg-red-500/15', 'border-red-500/30');
+          sleepTimerBtn.classList.remove('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
           sleepTimerBtn.classList.add('text-gray-500', 'bg-white/5', 'border-white/10');
           sleepTimerDisplay.classList.remove('inline-block');
           sleepTimerDisplay.classList.add('hidden', 'sm:inline-block');
         } else {
           sleepTimerDisplay.textContent = `${sleepTimerOptions[currentSleepTimerIndex]} min`;
           sleepTimerBtn.classList.remove('text-gray-500', 'bg-white/5', 'border-white/10');
-          sleepTimerBtn.classList.add('text-red-400', 'bg-red-500/15', 'border-red-500/30');
+          sleepTimerBtn.classList.add('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
           sleepTimerDisplay.classList.remove('hidden', 'sm:inline-block');
           sleepTimerDisplay.classList.add('inline-block');
         }
@@ -605,7 +647,7 @@
         const remainingStr = formatTime(Math.max(0, Math.ceil((sleepTimerTarget - Date.now()) / 1000)));
         sleepTimerDisplay.textContent = remainingStr;
         sleepTimerBtn.classList.remove('text-gray-500', 'bg-white/5', 'border-white/10');
-        sleepTimerBtn.classList.add('text-red-400', 'bg-red-500/15', 'border-red-500/30');
+        sleepTimerBtn.classList.add('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
         sleepTimerDisplay.classList.remove('hidden', 'sm:inline-block');
         sleepTimerDisplay.classList.add('inline-block');
       }
