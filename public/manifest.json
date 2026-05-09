@@ -7,12 +7,12 @@
   "theme_color": "#e5b84b",
   "icons": [
     {
-      "src": "/app_logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/app_logo.jpg",
+      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10",
       "sizes": "512x512",
       "type": "image/png"
     }

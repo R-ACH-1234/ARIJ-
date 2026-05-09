@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <title>ARIJ RADIO PRO</title>
-  <link rel="icon" href="/app_logo.jpg" type="image/png">
-  <link rel="apple-touch-icon" href="/app_logo.jpg">
+  <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10" type="image/png">
+  <link rel="apple-touch-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#e5b84b">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -117,7 +117,7 @@
     <aside class="w-full md:w-64 glass md:border-r border-b md:border-b-0 border-white/10 flex flex-col p-4 md:p-6 shrink-0 overflow-y-auto hide-scrollbar z-20">
       <div class="flex items-center gap-3 mb-4 md:mb-10 shrink-0">
         <div class="w-12 h-12 flex items-center justify-center shrink-0">
-          <img src="/app_logo.jpg" alt="Logo" class="w-full h-full object-contain drop-shadow-md rounded-xl">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10" alt="Logo" class="w-full h-full object-contain drop-shadow-md rounded-xl">
         </div>
         <h1 class="text-xl font-bold tracking-tight text-white whitespace-nowrap">
           ARIJ RADIO <span class="text-[#e5b84b]">PRO</span>
@@ -136,6 +136,9 @@
           </button>
           <button data-cat="featured" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
             <span>En vedette</span>
+          </button>
+          <button data-cat="arabic" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
+            <span>Arabe</span>
           </button>
           <button data-cat="news" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
             <span>Actualités</span>
@@ -260,30 +263,49 @@
   <script>
     // 1. Data Base
     const radioStations = [
-      // Featured
+      // 🏆 Featured
       {"title": "MFM Radio", "url": "https://a5.asurahosting.com:7980/radio.mp3", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Sy6R5xUUw1f_15ryEoJ0FHCjuTCm6TWpJnlk6Ok30A&s=10"},
-      {"title": "Medi 1 Radio", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "featured", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpbDLS8a3x6mDEgD9nKAVz8Ghceo7LibCEGzBO3Cg99g&s=10"},
+      {"title": "Medi 1 Radio", "url": "https://cdn.live.easybroadcast.io/live/83_medi1radio-maghreb_8s9i4bn/chunks.m3u8", "cat": "featured,news", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpbDLS8a3x6mDEgD9nKAVz8Ghceo7LibCEGzBO3Cg99g&s=10"},
       {"title": "Radio 2M", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_2m/radio_hls_ts_hy217612tge1f21j83/radio_2m-mp4a_130400=1.m3u8", "cat": "featured", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/4b/2M_Maroc_logo.svg"},
-      {"title": "Hit Radio", "url": "https://hitradio-maroc.ice.infomaniak.ch/hitradio-maroc-128.mp3", "cat": "featured", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Hit Radio", "url": "https://hitradio-maroc.ice.infomaniak.ch/hitradio-maroc-128.mp3", "cat": "featured,music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
       {"title": "Radio Mars", "url": "https://radiomars.ice.infomaniak.ch/radiomars-128.mp3", "cat": "featured,sport", "logo": "https://www.radiomars.ma/wp-content/themes/radiomars/images/logo.png"},
       {"title": "Radio Aswat", "url": "https://aswat.ice.infomaniak.ch/aswat-high.mp3", "cat": "featured", "logo": "https://www.aswat.ma/assets/img/logo.png"},
-      {"title": "Chada FM", "url": "https://edge16.vedge.infomaniak.com/livecast/ik:chadatv/chunklist_.m3u8", "cat": "featured", "logo": "https://www.chadafm.ma/wp-content/uploads/2019/01/logo-chada-fm.png"},
-      {"title": "Med Radio", "url": "https://medradio.ice.infomaniak.ch/medradio-128.mp3", "cat": "featured", "logo": "/app_logo.jpg"},
-      
-      // News
-      {"title": "RFI Monde", "url": "https://rfimonde64k.ice.infomaniak.ch/rfimonde-64.mp3", "cat": "news", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RFI_logo_2013.svg/1200px-RFI_logo_2013.svg.png"},
-      {"title": "RIM Radio", "url": "https://streaming.rimradio.ma/live", "cat": "news", "logo": "/app_logo.jpg"},
+      {"title": "Chada FM", "url": "https://edge16.vedge.infomaniak.com/livecast/ik:chadatv/chunklist_.m3u8", "cat": "featured,music", "logo": "https://www.chadafm.ma/wp-content/uploads/2019/01/logo-chada-fm.png"},
 
-      // Religious
-      {"title": "Assadissa (Mohammed 6)", "url": "https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_6/hls_snrt_radio/index.m3u8", "cat": "religious", "logo": "/app_logo.jpg"},
+      // 🌍 Arabic
+      {"title": "Monte Carlo Doualiya", "url": "https://montecarlodoualiya128k.ice.infomaniak.ch/mc-doualiya.mp3", "cat": "arabic,news", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Radio France Maghreb 2", "url": "https://francemaghreb2.ice.infomaniak.ch/francemaghreb2-high.mp3", "cat": "arabic", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Radio Aljalia", "url": "https://a9.asurahosting.com:8750/radio.mp3", "cat": "arabic", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Radio Joussour", "url": "https://stream-153.zeno.fm/heepkvo1lfavv", "cat": "arabic", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+
+      // 🎵 Music
+      {"title": "Hit Radio Party", "url": "https://dancefloor.ice.infomaniak.ch/dancefloor-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Hit Radio Urban", "url": "https://rnb.ice.infomaniak.ch/rnb-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Hit Radio Gold", "url": "https://gold.ice.infomaniak.ch/gold-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Hit Radio Classique", "url": "https://classique.ice.infomaniak.ch/classique-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
+      {"title": "Only Raï", "url": "https://onlyrai.ice.infomaniak.ch/onlyrai-high.mp3", "cat": "music", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2N4R76qjEqH09v5K2R2O537w93sX1l51L3Q&s"},
+      {"title": "Radio Gnawa", "url": "https://stream-175.zeno.fm/wghcdfwvnc9uv", "cat": "music", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Skyrock Casablanca", "url": "https://icecast.skyrock.net/s/casa_aac_64k", "cat": "music", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Skyrock.svg"},
+
+      // ♓ Amazigh
+      {"title": "Radio Al Amazighia", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_amazigh/hls_snrt_radio/index.m3u8", "cat": "amazigh", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Radio Atbir", "url": "https://stream-154.zeno.fm/bqdbb6hd0neuv", "cat": "amazigh", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Radio Izlan", "url": "https://izlan.fr/radios/atlas/stream", "cat": "amazigh", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Yabiladi Azawan Amazigh", "url": "https://radio.garden/api/ara/content/listen/v-fSUXiq/channel.mp3", "cat": "amazigh", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+
+      // 🕌 Religious
       {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "religious", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8r0_3_W7Hs4NVzPog2MoNjyAx6L-Mgi1O1iwbZduMPQ&s=10"},
-      
-      // Cities
-      {"title": "Cap Radio (Tanger)", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"},
-      {"title": "Radio Tanger Med", "url": "https://radiotangermed-22.ice.infomaniak.ch/radiotangermed-22-128.mp3", "cat": "cities", "logo": "/app_logo.jpg"},
+      {"title": "Assadissa (Mohammed 6)", "url": "https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_6/hls_snrt_radio/index.m3u8", "cat": "religious", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Samaa Radio", "url": "https://stream-159.zeno.fm/nezfuswpyjfuv", "cat": "religious", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
 
-      // Amazigh
-      {"title": "Radio Al Amazighia", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_amazigh/hls_snrt_radio/index.m3u8", "cat": "amazigh", "logo": "/app_logo.jpg"}
+      // 📍 Cities / News
+      {"title": "Cap Radio (Tanger)", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"},
+      {"title": "Radio Tanger Med", "url": "https://radiotangermed-22.ice.infomaniak.ch/radiotangermed-22-128.mp3", "cat": "cities", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Yan Plus (Agadir)", "url": "https://stream-155.zeno.fm/7nqu31p6xg0uv", "cat": "cities", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "Marrakech Plus", "url": "https://cast5.my-control-panel.com/proxy/marrakec/stream", "cat": "cities", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "RMN (Radio Maroc News)", "url": "https://stream-149.zeno.fm/nefhp3q9fc9uv", "cat": "cities,news", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "RIM Radio", "url": "https://streaming.rimradio.ma/live", "cat": "news", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10"},
+      {"title": "RFI Monde", "url": "https://rfimonde64k.ice.infomaniak.ch/rfimonde-64.mp3", "cat": "news", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RFI_logo_2013.svg/1200px-RFI_logo_2013.svg.png"}
     ];
 
     let favorites = JSON.parse(localStorage.getItem('arij_radio_favorites')) || [];
@@ -349,7 +371,7 @@
     // Image fallback function
     window.handleImageError = function(img, title) {
       img.onerror = null;
-      img.src = "/app_logo.jpg";
+      img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10";
     };
 
     // Render Stations
@@ -390,7 +412,7 @@
           </button>
           <div class="flex items-center gap-4 mb-3 md:mb-4 pr-6">
             <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bg-white/95 shrink-0 p-1.5 shadow-md shadow-black/20">
-              <img src="${station.logo}" alt="${station.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${station.title.replace(/'/g, "\\'")}')">
+              <img src="${station.logo}" alt="${station.title}" loading="lazy" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${station.title.replace(/'/g, "\\'")}')">
             </div>
             <div class="flex-1 min-w-0">
               <h3 class="font-bold mb-1 truncate text-white text-base md:text-lg">${station.title}</h3>
