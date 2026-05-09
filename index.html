@@ -160,7 +160,7 @@
           <h2 id="section-title" class="text-2xl font-semibold text-white">Toutes les radios</h2>
         </div>
 
-        <div id="stations-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+        <div id="stations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
           <!-- Stations will be injected here -->
         </div>
       </div>
@@ -315,14 +315,16 @@
         card.onclick = () => playStation(station);
 
         card.innerHTML = `
-          <div class="flex justify-between items-start mb-3 md:mb-4">
-            <h3 class="font-bold mb-1 line-clamp-1 text-white text-sm md:text-base">${station.title}</h3>
-            <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center overflow-hidden bg-white/90 shrink-0 p-1">
+          <div class="flex items-center gap-4 mb-3 md:mb-4">
+            <div class="w-14 h-14 md:w-16 md:h-16 rounded-xl flex items-center justify-center overflow-hidden bg-white/95 shrink-0 p-1.5 shadow-md shadow-black/20">
               <img src="${station.logo}" alt="${station.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${station.title.replace(/'/g, "\\'")}')">
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold mb-1 truncate text-white text-base md:text-lg">${station.title}</h3>
             </div>
           </div>
           
-          <div class="mt-auto pt-3 md:pt-4 flex items-center justify-between text-[9px] md:text-[10px] uppercase tracking-tighter font-bold h-6">
+          <div class="mt-auto pt-3 md:pt-4 flex items-center justify-between text-[9px] md:text-[10px] uppercase tracking-tighter font-bold h-6 border-t border-white/5">
              ${isCurrentlyPlaying ? `
                <span class="text-red-500">En lecture</span>
                <div class="wave-container">
