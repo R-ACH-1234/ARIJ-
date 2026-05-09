@@ -14,11 +14,17 @@
       background-attachment: fixed;
       color: #e5e7eb;
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      width: 100%;
       height: 100dvh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+    }
+    @supports (-webkit-touch-callout: none) {
+      body {
+        height: -webkit-fill-available;
+      }
     }
     .pb-safe {
       padding-bottom: env(safe-area-inset-bottom);
@@ -158,7 +164,7 @@
         </div>
       </header>
 
-      <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-10 pb-32 md:pb-10 relative" style="-webkit-overflow-scrolling: touch;">
+      <div class="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-10 pb-4 md:pb-10 relative" style="-webkit-overflow-scrolling: touch;">
         <div id="greeting-card" class="mb-6 md:mb-8 p-4 md:p-6 rounded-2xl glass border-red-500/30 bg-red-500/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
           <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-red-500/10"></div>
           <h2 id="greeting-text" class="text-xl md:text-2xl font-bold text-white relative z-10 text-center tracking-wide"></h2>
@@ -173,8 +179,7 @@
         </div>
       </div>
 
-      <!-- Bottom Player -->
-      <footer class="fixed md:static bottom-0 left-0 w-full min-h-[88px] md:min-h-[96px] glass border-t border-white/10 flex items-center px-4 md:px-8 shrink-0 z-50 bg-[#1a0505]/95 backdrop-blur-xl pb-safe">
+      <footer class="shrink-0 w-full min-h-[88px] md:min-h-[96px] glass border-t border-white/10 flex items-center px-4 md:px-8 z-50 bg-[#1a0505]/95 backdrop-blur-xl pb-safe">
         <div id="player-info" class="flex items-center gap-3 w-2/5 md:w-1/4 min-w-0">
           <div id="player-logo-container" class="flex w-10 h-10 md:w-12 md:h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
             <span class="text-gray-500 text-[10px] md:text-xs">Logo</span>
