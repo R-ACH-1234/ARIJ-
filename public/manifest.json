@@ -1,0 +1,20 @@
+{
+  "name": "ARIJ RADIO PRO",
+  "short_name": "ARIJ RADIO",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050810",
+  "theme_color": "#e5b84b",
+  "icons": [
+    {
+      "src": "https://f.top4top.io/s_3781y3o7d0.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://f.top4top.io/s_3781y3o7d0.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
