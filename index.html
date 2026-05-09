@@ -109,7 +109,7 @@
     <aside class="w-full md:w-64 glass md:border-r border-b md:border-b-0 border-white/10 flex flex-col p-4 md:p-6 shrink-0 overflow-y-auto hide-scrollbar z-20">
       <div class="flex items-center gap-3 mb-4 md:mb-10 shrink-0">
         <div class="w-12 h-12 flex items-center justify-center shrink-0">
-          <img src="https://drive.google.com/uc?export=view&id=1ldkM9vk5C8FNJgKgU_meOxVcrGLe0EA8" alt="Logo" class="w-full h-full object-contain drop-shadow-md rounded-xl">
+          <img src="https://drive.google.com/uc?export=view&id=1c11GLaVOS5r9PQclCdQCZwDYvPUbx5-7" alt="Logo" class="w-full h-full object-contain drop-shadow-md rounded-xl">
         </div>
         <h1 class="text-xl font-bold tracking-tight text-white whitespace-nowrap">
           ARIJ RADIO <span class="text-red-500">PRO</span>
@@ -313,10 +313,8 @@
     
     // Image fallback function
     window.handleImageError = function(img, title) {
-      const parent = img.parentElement;
-      const initials = (title || 'A').replace(/radio\s+/i, '').trim().substring(0, 2).toUpperCase();
-      parent.innerHTML = `<div class="fallback-logo w-full h-full rounded-xl">${initials}</div>`;
-      parent.className = parent.className.replace('bg-white/90', '').replace('p-1', ''); // Clean up wrapper styles
+      img.onerror = null;
+      img.src = "https://drive.google.com/uc?export=view&id=1c11GLaVOS5r9PQclCdQCZwDYvPUbx5-7";
     };
 
     // Render Stations
