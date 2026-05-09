@@ -7,12 +7,12 @@
   "theme_color": "#e5b84b",
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "https://upload.wikimedia.org/wikipedia/commons/8/82/Radio_icon.svg",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/logo.png",
+      "src": "https://upload.wikimedia.org/wikipedia/commons/8/82/Radio_icon.svg",
       "sizes": "512x512",
       "type": "image/png"
     }
