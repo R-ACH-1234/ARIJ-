@@ -269,7 +269,7 @@
           </div>
         </div>
 
-        <div class="flex-1 flex flex-col items-center justify-center gap-1.5 md:gap-2">
+        <div class="shrink-0 md:flex-1 flex flex-col items-center justify-center gap-1.5 md:gap-2 px-1">
           <div class="flex items-center gap-3 md:gap-6">
             <button id="play-btn" class="w-12 h-12 md:w-12 md:h-12 bg-white text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] shrink-0 group">
               <svg id="play-icon" class="w-5 h-5 md:w-5 md:h-5 ml-1 text-black group-hover:text-[#e5b84b] transition-colors" fill="currentColor" viewBox="0 0 20 20">
@@ -291,10 +291,10 @@
           </div>
         </div>
 
-        <div class="flex-1 md:w-1/4 flex items-center justify-end rtl:justify-start gap-1.5 md:gap-4 min-w-0">
+        <div class="shrink-0 md:flex-1 md:w-1/4 flex items-center justify-end rtl:justify-start gap-1 md:gap-4 min-w-0 pl-1 md:pl-0">
           <button id="sleep-timer-btn" onclick="openSleepTimerModal()" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" data-i18n-title="timer">
             <svg id="sleep-timer-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span id="sleep-timer-display" class="font-medium inline-block" data-i18n="timer_short">Minut.</span>
+            <span id="sleep-timer-display" class="font-medium hidden sm:inline-block" data-i18n="timer_short">Minut.</span>
           </button>
           
           <button id="mute-btn" class="text-gray-500 hover:text-white transition-colors p-1">
@@ -305,7 +305,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
             </svg>
           </button>
-          <div class="w-16 md:w-24 h-5 cursor-pointer relative flex items-center group">
+          <div class="w-12 sm:w-16 md:w-24 h-5 cursor-pointer relative flex items-center group">
             <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" class="absolute inset-0 w-full opacity-0 cursor-pointer z-10" />
             <div class="w-full h-1 bg-white/20 rounded-full transition-all flex items-center group-hover:h-1.5 overflow-hidden">
                <div id="volume-fill" class="h-full bg-white rounded-full pointer-events-none" style="width: 100%;"></div>
@@ -897,11 +897,13 @@
         sleepTimerDisplay.textContent = translations[currentLang].timer_short;
         sleepTimerBtn.classList.remove('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
         sleepTimerBtn.classList.add('text-gray-500', 'bg-white/5', 'border-white/10');
+        sleepTimerDisplay.classList.add('hidden', 'sm:inline-block');
       } else {
         const remainingStr = formatTime(Math.max(0, Math.ceil((sleepTimerTarget - Date.now()) / 1000)));
         sleepTimerDisplay.textContent = remainingStr;
         sleepTimerBtn.classList.remove('text-gray-500', 'bg-white/5', 'border-white/10');
         sleepTimerBtn.classList.add('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
+        sleepTimerDisplay.classList.remove('hidden', 'sm:inline-block');
       }
     }
 
