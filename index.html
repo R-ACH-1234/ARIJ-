@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <title>ARIJ RADIO PRO</title>
   <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk4L0PDMmgwLQr35LqcXn0sJciZ2gqDsiXKHQa6ZDS-g&s=10" type="image/png">
@@ -16,18 +16,21 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #050810 0%, #0a1128 50%, #111a38 100%);
       background-attachment: fixed;
       color: #e5e7eb;
       margin: 0;
       padding: 0;
-      width: 100%;
+      width: 100vw;
+      max-width: 100vw;
+      height: 100vh; /* Fallback */
       height: 100dvh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      -webkit-text-size-adjust: 100%;
     }
     @supports (-webkit-touch-callout: none) {
       body {
@@ -155,7 +158,7 @@
   <div class="glow-orb" style="top: -100px; left: -100px;"></div>
   <div class="glow-orb" style="bottom: -100px; right: -100px;"></div>
 
-  <div class="flex flex-col md:flex-row h-full w-full relative z-10 overflow-hidden">
+  <div class="flex flex-1 flex-col md:flex-row h-full w-full relative z-10 overflow-hidden">
     <!-- Sidebar -->
     <aside class="w-full md:w-64 glass md:border-r border-b md:border-b-0 border-white/10 flex flex-col p-2 md:p-6 shrink-0 overflow-y-auto hide-scrollbar z-20">
       <div class="flex items-center justify-between mb-3 md:mb-10 shrink-0 w-full">
@@ -219,7 +222,7 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-w-0 min-h-0 bg-transparent overflow-hidden">
       <header class="h-14 md:h-20 shrink-0 flex items-center justify-between px-2 md:px-10 border-b border-white/5 space-x-reverse space-x-4">
-        <div class="relative w-full md:w-96 max-w-full">
+        <div class="relative flex-1 min-w-0 md:flex-none md:w-96 max-w-full">
           <input 
             type="text" 
             id="search-input"
@@ -256,7 +259,7 @@
       </div>
 
       <footer class="shrink-0 w-full min-h-[80px] md:min-h-[96px] glass border-t border-white/10 flex items-center px-2 md:px-8 z-50 bg-[#0a1128]/95 backdrop-blur-xl pb-safe">
-        <div id="player-info" class="flex items-center gap-2 md:gap-3 w-1/2 md:w-1/4 min-w-0">
+        <div id="player-info" class="flex items-center gap-2 md:gap-3 flex-1 min-w-0 md:w-1/4">
           <div id="player-logo-container" class="flex w-12 h-12 md:w-12 md:h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
             <span class="text-gray-500 text-[10px] md:text-xs">Logo</span>
           </div>
@@ -288,7 +291,7 @@
           </div>
         </div>
 
-        <div class="w-1/2 md:w-1/4 flex items-center justify-end rtl:justify-start gap-1.5 md:gap-4 shrink-0">
+        <div class="flex-1 md:w-1/4 flex items-center justify-end rtl:justify-start gap-1.5 md:gap-4 min-w-0">
           <button id="sleep-timer-btn" onclick="openSleepTimerModal()" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" data-i18n-title="timer">
             <svg id="sleep-timer-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span id="sleep-timer-display" class="font-medium inline-block" data-i18n="timer_short">Minut.</span>
