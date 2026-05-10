@@ -108,6 +108,30 @@
   </style>
 </head>
 <body>
+  <!-- Language Modal -->
+  <div id="language-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+    <div class="glass p-8 rounded-2xl border border-white/10 max-w-sm w-full mx-4 flex flex-col gap-6" dir="ltr">
+      <div class="text-center">
+        <h2 class="text-2xl font-bold text-white mb-2">Choisissez votre langue</h2>
+        <p class="text-gray-400 text-sm">Choose your language / اختر لغتك</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <button onclick="setLanguage('fr')" class="w-full py-3 px-4 bg-white/5 hover:bg-[#e5b84b]/20 border border-white/10 hover:border-[#e5b84b]/50 rounded-xl transition-all font-medium flex items-center justify-between group">
+          <span class="text-white group-hover:text-[#e5b84b]">Français</span>
+          <span class="text-xl">🇫🇷</span>
+        </button>
+        <button onclick="setLanguage('ar')" class="w-full py-3 px-4 bg-white/5 hover:bg-[#e5b84b]/20 border border-white/10 hover:border-[#e5b84b]/50 rounded-xl transition-all font-medium flex items-center justify-between group">
+          <span class="text-white group-hover:text-[#e5b84b]">العربية</span>
+          <span class="text-xl">🇲🇦</span>
+        </button>
+        <button onclick="setLanguage('en')" class="w-full py-3 px-4 bg-white/5 hover:bg-[#e5b84b]/20 border border-white/10 hover:border-[#e5b84b]/50 rounded-xl transition-all font-medium flex items-center justify-between group">
+          <span class="text-white group-hover:text-[#e5b84b]">English</span>
+          <span class="text-xl">🇬🇧</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Decorative Glow -->
   <div class="glow-orb" style="top: -100px; left: -100px;"></div>
   <div class="glow-orb" style="bottom: -100px; right: -100px;"></div>
@@ -126,37 +150,43 @@
       
       <nav class="flex flex-col gap-4 md:gap-6 text-sm flex-1">
         <div id="category-tabs" class="flex flex-row md:flex-col gap-2 shrink-0 overflow-x-auto md:overflow-visible pb-2 md:pb-0 hide-scrollbar">
-          <p class="hidden md:block text-gray-500 uppercase text-[10px] font-bold tracking-widest px-2 mb-2">Catégories</p>
+          <p data-i18n="categories" class="hidden md:block text-gray-500 uppercase text-[10px] font-bold tracking-widest px-2 mb-2">Catégories</p>
           <button data-cat="all" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap bg-[#e5b84b]/15 text-[#e5b84b]">
-            <span>Tout</span>
+            <span data-i18n="all">Tout</span>
           </button>
           <button data-cat="favorites" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            <span>Favoris</span>
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            <span data-i18n="favorites">Favoris</span>
           </button>
           <button data-cat="featured" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>En vedette</span>
+            <span data-i18n="featured">En vedette</span>
           </button>
           <button data-cat="arabic" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Arabe</span>
+            <span data-i18n="arabic">Arabe</span>
           </button>
           <button data-cat="news" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Actualités</span>
+            <span data-i18n="news">Actualités</span>
           </button>
           <button data-cat="music" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Musique</span>
+            <span data-i18n="music">Musique</span>
           </button>
           <button data-cat="religious" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Religieux</span>
+            <span data-i18n="religious">Religieux</span>
           </button>
           <button data-cat="cities" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Villes</span>
+            <span data-i18n="cities">Villes</span>
           </button>
           <button data-cat="amazigh" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Amazigh</span>
+            <span data-i18n="amazigh">Amazigh</span>
           </button>
           <button data-cat="sport" class="cat-btn flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white">
-            <span>Sport</span>
+            <span data-i18n="sport">Sport</span>
+          </button>
+
+          <div class="h-px w-full bg-white/10 my-2 hidden md:block"></div>
+          <button onclick="openLanguageModal()" class="flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors whitespace-nowrap text-gray-400 hover:text-white border border-white/5 hover:bg-white/5">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+            <span data-i18n="languages">Langues</span>
           </button>
         </div>
       </nav>
@@ -169,10 +199,11 @@
           <input 
             type="text" 
             id="search-input"
+            data-i18n-placeholder="search_placeholder"
             placeholder="Rechercher une radio, ville ou genre..." 
             class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pr-10 pl-4 text-sm focus:outline-none focus:border-[#e5b84b]/50 transition-all text-white placeholder:text-gray-500"
           >
-          <svg class="w-4 h-4 text-gray-500 absolute right-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 text-gray-500 absolute right-4 rtl:right-auto rtl:left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
         </div>
@@ -180,7 +211,7 @@
         <div class="flex items-center gap-2 md:gap-4 text-xs md:text-sm font-medium shrink-0">
           <span class="text-[#e5b84b] flex items-center gap-2 whitespace-nowrap">
             <span class="w-2 h-2 bg-[#e5b84b] rounded-full animate-pulse shadow-lg shadow-[#e5b84b]/50"></span>
-            <span class="hidden sm:inline">En direct</span>
+            <span class="hidden sm:inline" data-i18n="live">En direct</span>
           </span>
         </div>
       </header>
@@ -192,7 +223,7 @@
         </div>
 
         <div class="flex items-center justify-between mb-8">
-          <h2 id="section-title" class="text-2xl font-semibold text-white">Toutes les radios</h2>
+          <h2 id="section-title" data-i18n-dynamic="true" class="text-2xl font-semibold text-white">Toutes les radios</h2>
         </div>
 
         <div id="stations-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
@@ -205,9 +236,9 @@
           <div id="player-logo-container" class="flex w-10 h-10 md:w-12 md:h-12 rounded-lg shrink-0 overflow-hidden bg-white/5 items-center justify-center">
             <span class="text-gray-500 text-[10px] md:text-xs">Logo</span>
           </div>
-          <div class="min-w-0 flex-1">
-            <h4 id="player-title" class="text-xs md:text-sm font-bold text-white truncate leading-tight">Sélectionnez une radio</h4>
-            <p id="player-status" class="text-[9px] md:text-[10px] text-gray-400 font-medium truncate mt-0.5">Prêt à lire</p>
+          <div class="min-w-0 flex-1 ml-2 rtl:mr-2 rtl:ml-0">
+            <h4 id="player-title" data-i18n="select_radio" class="text-xs md:text-sm font-bold text-white truncate leading-tight">Sélectionnez une radio</h4>
+            <p id="player-status" data-i18n="ready" class="text-[9px] md:text-[10px] text-gray-400 font-medium truncate mt-0.5">Prêt à lire</p>
           </div>
         </div>
 
@@ -221,7 +252,7 @@
                 <path d="M5 4h3v12H5V4zm7 0h3v12h-3V4z"></path>
               </svg>
             </button>
-            <button id="stop-btn" class="text-gray-400 hover:text-white transition-colors p-2" title="Arrêter">
+            <button id="stop-btn" class="text-gray-400 hover:text-white transition-colors p-2" title="Arrêter" data-i18n-title="stop_btn">
               <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4.5 5a.5.5 0 01.5-.5h10a.5.5 0 01.5.5v10a.5.5 0 01-.5.5H5a.5.5 0 01-.5-.5V5z" clip-rule="evenodd"></path>
               </svg>
@@ -233,10 +264,10 @@
           </div>
         </div>
 
-        <div class="w-2/5 md:w-1/4 flex items-center justify-end gap-2 md:gap-4 shrink-0">
-          <button id="sleep-timer-btn" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" title="Minuterie">
+        <div class="w-2/5 md:w-1/4 flex items-center justify-end rtl:justify-start gap-2 md:gap-4 shrink-0">
+          <button id="sleep-timer-btn" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" data-i18n-title="timer">
             <svg id="sleep-timer-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span id="sleep-timer-display" class="font-medium hidden sm:inline-block">Minut.</span>
+            <span id="sleep-timer-display" class="font-medium hidden sm:inline-block" data-i18n="timer_short">Minut.</span>
           </button>
           
           <button id="mute-btn" class="text-gray-500 hover:text-white transition-colors p-1">
@@ -261,6 +292,181 @@
   <audio id="audio-player" style="display: none;"></audio>
 
   <script>
+    // 0. Translations
+    const translations = {
+      fr: {
+        choose_lang: "Choisissez votre langue",
+        categories: "Catégories",
+        all: "Tout",
+        favorites: "Favoris",
+        featured: "En vedette",
+        arabic: "Arabe",
+        news: "Actualités",
+        music: "Musique",
+        religious: "Religieux",
+        cities: "Villes",
+        amazigh: "Amazigh",
+        sport: "Sport",
+        search_placeholder: "Rechercher une radio, ville ou genre...",
+        live: "En direct",
+        all_radios: "Toutes les radios",
+        select_radio: "Sélectionnez une radio",
+        ready: "Prêt à lire",
+        playing: "En lecture",
+        connecting: "Connexion...",
+        listen: "Écouter",
+        stopped: "Arrêté",
+        error_play: "Erreur de lecture",
+        error_stream: "Erreur de flux",
+        no_radio_found: "Aucune radio trouvée.",
+        good_morning: "Bonjour de Arij ☀️",
+        good_afternoon: "Bonsoir de Arij 🌅",
+        good_night: "Arij vous souhaite une bonne nuit 🌙",
+        timer_short: "Minut.",
+        timer: "Minuterie",
+        stop_btn: "Arrêter",
+        languages: "Langues",
+        connected_stream: "Flux en direct connecté"
+      },
+      ar: {
+        choose_lang: "اختر لغتك",
+        categories: "الفئات",
+        all: "الكل",
+        favorites: "المفضلة",
+        featured: "مميزة",
+        arabic: "عربية",
+        news: "أخبار",
+        music: "موسيقى",
+        religious: "ديني",
+        cities: "مدن",
+        amazigh: "أمازيغي",
+        sport: "رياضة",
+        search_placeholder: "ابحث عن راديو، مدينة، أو نوع...",
+        live: "مباشر",
+        all_radios: "جميع الإذاعات",
+        select_radio: "اختر إذاعة",
+        ready: "جاهز للتشغيل",
+        playing: "قيد التشغيل",
+        connecting: "جاري الاتصال...",
+        listen: "استمع",
+        stopped: "متوقف",
+        error_play: "خطأ في التشغيل",
+        error_stream: "خطأ في البث",
+        no_radio_found: "لم يتم العثور على إذاعة.",
+        good_morning: "صباح الخير من أريج ☀️",
+        good_afternoon: "مساء الخير من أريج 🌅",
+        good_night: "أريج تتمنى لكم ليلة سعيدة 🌙",
+        timer_short: "مؤقت",
+        timer: "المؤقت",
+        stop_btn: "إيقاف",
+        languages: "اللغات",
+        connected_stream: "متصل بالبث المباشر"
+      },
+      en: {
+        choose_lang: "Choose your language",
+        categories: "Categories",
+        all: "All",
+        favorites: "Favorites",
+        featured: "Featured",
+        arabic: "Arabic",
+        news: "News",
+        music: "Music",
+        religious: "Religious",
+        cities: "Cities",
+        amazigh: "Amazigh",
+        sport: "Sport",
+        search_placeholder: "Search for radio, city or genre...",
+        live: "Live",
+        all_radios: "All Radios",
+        select_radio: "Select a radio",
+        ready: "Ready to play",
+        playing: "Playing",
+        connecting: "Connecting...",
+        listen: "Listen",
+        stopped: "Stopped",
+        error_play: "Playback error",
+        error_stream: "Stream error",
+        no_radio_found: "No radio found.",
+        good_morning: "Good morning from Arij ☀️",
+        good_afternoon: "Good evening from Arij 🌅",
+        good_night: "Arij wishes you a good night 🌙",
+        timer_short: "Timer",
+        timer: "Sleep Timer",
+        stop_btn: "Stop",
+        languages: "Languages",
+        connected_stream: "Live stream connected"
+      }
+    };
+
+    let currentLang = localStorage.getItem('arij_lang') || 'fr';
+
+    function applyTranslations() {
+      const t = translations[currentLang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) el.placeholder = t[key];
+      });
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        if (t[key]) el.title = t[key];
+      });
+      
+      // Update section title correctly if not overriden
+      const activeCat = document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15');
+      if (activeCat) {
+        const cat = activeCat.getAttribute('data-cat');
+        if (cat === 'all') {
+          sectionTitle.textContent = t.all_radios;
+        } else {
+          sectionTitle.textContent = t[cat] || activeCat.querySelector('span').textContent;
+        }
+      }
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('arij_lang', lang);
+      
+      if (lang === 'ar') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+      } else {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = lang;
+      }
+      
+      applyTranslations();
+      updateGreeting();
+      updatePlayerUIText();
+      renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15')?.getAttribute('data-cat') || 'all', searchInput.value);
+      
+      document.getElementById('language-modal').classList.add('hidden');
+    }
+
+    function openLanguageModal() {
+      document.getElementById('language-modal').classList.remove('hidden');
+    }
+
+    function updatePlayerUIText() {
+      const t = translations[currentLang];
+      if (!currentStation) {
+        playerTitle.textContent = t.select_radio;
+        playerStatus.textContent = t.ready;
+      } else {
+        if (isPlaying) {
+          playerStatus.innerHTML = `<span class="text-[#e5b84b]">${t.connected_stream}</span>`;
+        } else if (audio.src) {
+          playerStatus.innerHTML = `<span class="text-gray-500">${t.stopped}</span>`;
+        } else {
+           playerStatus.innerHTML = `<span class="text-[#e5b84b] animate-pulse">${t.connecting}</span>`;
+        }
+      }
+    }
+
     // 1. Data Base
     const radioStations = [
       // 🏆 Featured
@@ -342,12 +548,13 @@
       const timeInHours = hour + minute / 60;
       
       let message = "";
+      const t = translations[currentLang];
       if (timeInHours >= 7 && timeInHours <= 12) {
-        message = "Bonjour de Arij ☀️";
+        message = t.good_morning;
       } else if (timeInHours > 12 && timeInHours <= 19) {
-        message = "Bonsoir de Arij 🌅";
+        message = t.good_afternoon;
       } else {
-        message = "Arij vous souhaite une bonne nuit 🌙";
+        message = t.good_night;
       }
       
       greetingText.textContent = message;
@@ -377,6 +584,7 @@
     // Render Stations
     function renderStations(filterCat = 'all', searchQuery = '') {
       stationsGrid.innerHTML = '';
+      const t = translations[currentLang];
       
       const filtered = radioStations.filter(station => {
         let matchCat = false;
@@ -393,7 +601,7 @@
       });
 
       if (filtered.length === 0) {
-        stationsGrid.innerHTML = '<div class="col-span-full py-10 text-center text-gray-500">Aucune radio trouvée.</div>';
+        stationsGrid.innerHTML = `<div class="col-span-full py-10 text-center text-gray-500">${t.no_radio_found}</div>`;
         return;
       }
 
@@ -421,7 +629,7 @@
           
           <div class="mt-auto pt-3 md:pt-4 flex items-center justify-between text-[9px] md:text-[10px] uppercase tracking-tighter font-bold h-6 border-t border-white/5">
              ${isCurrentlyPlaying ? `
-               <span class="text-[#e5b84b]">En lecture</span>
+               <span class="text-[#e5b84b]">${t.playing}</span>
                <div class="wave-container">
                  <div class="wave-bar" style="animation-delay: 0.1s"></div>
                  <div class="wave-bar" style="animation-delay: 0.2s"></div>
@@ -429,9 +637,9 @@
                  <div class="wave-bar" style="animation-delay: 0.4s"></div>
                </div>
              ` : isActive ? `
-               <span class="text-[#e5b84b] animate-pulse">Connexion...</span>
+               <span class="text-[#e5b84b] animate-pulse">${t.connecting}</span>
              ` : `
-               <span class="text-gray-500 group-hover:text-gray-300 transition-colors">Écouter</span>
+               <span class="text-gray-500 group-hover:text-gray-300 transition-colors">${t.listen}</span>
              `}
           </div>
         `;
@@ -445,7 +653,9 @@
       isPlaying = false; 
       updatePlayerUI();
       renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
-      playerStatus.innerHTML = '<span class="text-[#e5b84b] animate-pulse">Connexion...</span>';
+      
+      const t = translations[currentLang];
+      playerStatus.innerHTML = `<span class="text-[#e5b84b] animate-pulse">${t.connecting}</span>`;
 
       if (hls) {
         hls.destroy();
@@ -459,12 +669,12 @@
       const playCurrent = () => {
         audio.play().then(() => {
           isPlaying = true;
-          playerStatus.innerHTML = '<span class="text-[#e5b84b]">Flux en direct connecté</span>';
+          playerStatus.innerHTML = `<span class="text-[#e5b84b]">${translations[currentLang].connected_stream}</span>`;
           updatePlayerUI();
           renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
         }).catch(err => {
           console.error(err);
-          playerStatus.innerHTML = '<span class="text-rose-400">Erreur de lecture</span>';
+          playerStatus.innerHTML = `<span class="text-rose-400">${translations[currentLang].error_play}</span>`;
         });
       };
 
@@ -476,7 +686,7 @@
           hls.on(Hls.Events.MANIFEST_PARSED, playCurrent);
           hls.on(Hls.Events.ERROR, function(event, data) {
             if (data.fatal) {
-              playerStatus.innerHTML = '<span class="text-rose-400">Erreur de flux</span>';
+              playerStatus.innerHTML = `<span class="text-rose-400">${translations[currentLang].error_stream}</span>`;
             }
           });
         } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
@@ -491,14 +701,15 @@
 
     function togglePlay() {
       if (!currentStation) return;
+      const t = translations[currentLang];
       if (isPlaying) {
         audio.pause();
         isPlaying = false;
-        playerStatus.innerHTML = '<span class="text-gray-500">Arrêté</span>';
+        playerStatus.innerHTML = `<span class="text-gray-500">${t.stopped}</span>`;
       } else {
         audio.play();
         isPlaying = true;
-        playerStatus.innerHTML = '<span class="text-[#e5b84b]">Flux en direct connecté</span>';
+        playerStatus.innerHTML = `<span class="text-[#e5b84b]">${t.connected_stream}</span>`;
       }
       updatePlayerUI();
       renderStations(document.querySelector('.cat-btn.bg-\\[\\#e5b84b\\]\\/15').getAttribute('data-cat'), searchInput.value);
@@ -534,7 +745,7 @@
         hls = null;
       }
       isPlaying = false;
-      playerStatus.innerHTML = '<span class="text-gray-500">Arrêté</span>';
+      playerStatus.innerHTML = `<span class="text-gray-500">${translations[currentLang].stopped}</span>`;
       
       // Also reset sleep timer when stopped manually
       if (sleepTimerTarget) {
@@ -567,10 +778,10 @@
         const cat = clickedBtn.getAttribute('data-cat');
         
         if (cat === 'all') {
-          sectionTitle.textContent = "Toutes les radios";
+          sectionTitle.textContent = translations[currentLang].all_radios;
           greetingCard.style.display = 'flex';
         } else {
-          sectionTitle.textContent = clickedBtn.querySelector('span').textContent;
+          sectionTitle.textContent = translations[currentLang][cat] || clickedBtn.querySelector('span').textContent;
           greetingCard.style.display = 'none';
         }
         
@@ -646,7 +857,7 @@
     function updateSleepTimerDisplay() {
       if (!sleepTimerTarget) {
         if (currentSleepTimerIndex === 0) {
-          sleepTimerDisplay.textContent = "Minut.";
+          sleepTimerDisplay.textContent = translations[currentLang].timer_short;
           sleepTimerBtn.classList.remove('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
           sleepTimerBtn.classList.add('text-gray-500', 'bg-white/5', 'border-white/10');
           sleepTimerDisplay.classList.remove('inline-block');
@@ -708,6 +919,13 @@
     });
 
     // Init
+    const savedLang = localStorage.getItem('arij_lang');
+    if (!savedLang) {
+      openLanguageModal();
+    } else {
+      setLanguage(savedLang);
+    }
+
     updateGreeting();
     setInterval(updateGreeting, 60000);
     greetingCard.style.display = 'flex';
