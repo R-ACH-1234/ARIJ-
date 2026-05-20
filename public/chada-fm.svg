@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <clipPath id="circle-clip">
+      <circle cx="250" cy="250" r="240" />
+    </clipPath>
+  </defs>
+  
+  <g clip-path="url(#circle-clip)">
+    <!-- Top Red Part -->
+    <rect x="0" y="0" width="500" height="330" fill="#E52421" />
+    <!-- Bottom Black Part -->
+    <rect x="0" y="330" width="500" height="170" fill="#000000" />
+    
+    <!-- Dividing line is just the contrast between rectangles -->
+
+    <!-- Arabic text (approximate strokes using paths or text if safe) -->
+    <!-- Creating a stylized 'شدى' -->
+    <path d="M 180,240 C 180,270 140,290 100,280 C 70,270 60,240 60,200 C 60,160 80,120 120,90 C 130,105 100,130 90,160 C 80,190 90,240 120,250 C 140,260 160,250 160,230 C 160,210 140,200 130,220" fill="white" />
+
+    <path d="M 180,230 C 200,260 250,260 280,240 C 290,230 300,210 300,190 C 300,170 280,160 260,170 C 250,180 250,200 260,220 C 230,230 200,220 180,200 Z" fill="white" />
+
+    <path d="M 320,210 C 350,250 400,240 420,180 C 430,150 420,110 400,80 C 390,90 400,120 395,150 C 380,190 350,210 320,190 Z" fill="white" />
+    
+    <circle cx="250" cy="120" r="8" fill="white" />
+    <circle cx="300" cy="140" r="8" fill="white" />
+    <circle cx="350" cy="110" r="8" fill="white" />
+    
+    <!-- FM Text -->
+    <text x="380" y="300" font-family="'Inter', sans-serif" font-size="70" fill="white" font-weight="bold">FM</text>
+    
+    <!-- CHADA Text -->
+    <text x="250" y="420" font-family="'Inter', sans-serif" font-size="85" fill="white" text-anchor="middle" letter-spacing="8">CHADA</text>
+  </g>
+</svg>
