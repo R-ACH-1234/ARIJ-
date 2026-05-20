@@ -316,7 +316,7 @@
     </main>
   </div>
   
-  <video id="audio-player" playsinline style="display: none;"></video>
+  <audio id="audio-player" style="display: none;"></audio>
 
   <script>
     // 0. Translations
@@ -784,6 +784,23 @@
       if (currentStation) {
         playerTitle.textContent = currentStation.title;
         playerLogoContainer.innerHTML = `<div class="w-full h-full bg-white/90 p-1 flex"><img src="${currentStation.logo}" alt="${currentStation.title}" class="w-full h-full object-contain mix-blend-multiply" onerror="handleImageError(this, '${currentStation.title.replace(/'/g, "\\'")}')"></div>`;
+        
+        if ('mediaSession' in navigator) {
+          let logoSrc = currentStation.logo;
+          if (logoSrc === 'missing-logo.png' || logoSrc.startsWith('/')) {
+            logoSrc = window.location.origin + (logoSrc.startsWith('/') ? logoSrc : '/' + logoSrc);
+          }
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: currentStation.title,
+            artist: 'ARiJ Radio',
+            artwork: [
+              { src: logoSrc, sizes: '512x512', type: 'image/png' }
+            ]
+          });
+          
+          navigator.mediaSession.setActionHandler('play', togglePlay);
+          navigator.mediaSession.setActionHandler('pause', togglePlay);
+        }
       }
       if (isPlaying) {
         playIcon.classList.add('hidden');
