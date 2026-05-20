@@ -95,6 +95,37 @@
       display: none;
     }
     
+    /* News Ticker */
+    .news-ticker-wrap {
+      overflow: hidden;
+      box-sizing: border-box;
+      width: 100%;
+      position: relative;
+    }
+    .news-ticker {
+      display: inline-block;
+      white-space: nowrap;
+      animation: ticker 120s linear infinite;
+    }
+    .news-ticker-container:hover .news-ticker {
+      animation-play-state: paused;
+    }
+    html[dir="ltr"] .news-ticker {
+      padding-left: 100%;
+    }
+    html[dir="rtl"] .news-ticker {
+      padding-right: 100%;
+      animation-name: ticker-rtl;
+    }
+    @keyframes ticker {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+    @keyframes ticker-rtl {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(100%, 0, 0); }
+    }
+
     /* Fallback logo style */
     .fallback-logo {
       display: flex;
@@ -244,9 +275,19 @@
       </header>
 
       <div class="flex-1 overflow-y-auto overflow-x-hidden p-1 pt-3 md:p-10 relative" style="-webkit-overflow-scrolling: touch;">
-        <div id="greeting-card" class="mb-4 md:mb-8 mx-1 md:mx-0 p-4 md:p-6 rounded-2xl glass border-[#e5b84b]/30 bg-[#e5b84b]/5 flex items-center justify-center relative overflow-hidden" style="display: none;">
+        <div id="greeting-card" class="news-ticker-container mb-4 md:mb-8 mx-1 md:mx-0 p-3 md:p-4 rounded-xl glass border-[#e5b84b]/30 bg-[#e5b84b]/5 flex items-center relative overflow-hidden" style="display: none;">
           <div class="absolute inset-0 bg-gradient-to-r from-[#e5b84b]/10 via-transparent to-[#e5b84b]/10"></div>
-          <h2 id="greeting-text" class="text-lg md:text-2xl font-bold text-white relative z-10 text-center tracking-wide"></h2>
+          
+          <div class="z-10 flex-shrink-0 flex items-center gap-2 mr-3 ml-3 text-[#e5b84b] font-bold uppercase text-xs tracking-widest border-r border-l border-[#e5b84b]/30 px-3">
+             <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15"></path></svg>
+             <span data-i18n="news_ticker_badge">NEWS</span>
+          </div>
+
+          <div class="news-ticker-wrap">
+             <div id="greeting-text" class="news-ticker text-sm md:text-base font-semibold text-white/90 tracking-wide">
+                <!-- News items will be injected here -->
+             </div>
+          </div>
         </div>
 
         <div class="flex items-center justify-between mb-4 md:mb-8 px-2 md:px-0">
@@ -316,7 +357,7 @@
     </main>
   </div>
   
-  <audio id="audio-player" style="display: none;"></audio>
+  <audio id="audio-player" crossorigin="anonymous" style="display: none;"></audio>
 
   <script>
     // 0. Translations
@@ -353,7 +394,8 @@
         timer: "Minuterie",
         stop_btn: "Arrêter",
         languages: "Langues",
-        connected_stream: "Flux en direct connecté"
+        connected_stream: "Flux en direct connecté",
+        news_ticker_badge: "INFO"
       },
       ar: {
         choose_lang: "اختر لغتك",
@@ -387,7 +429,8 @@
         timer: "المؤقت",
         stop_btn: "إيقاف",
         languages: "اللغات",
-        connected_stream: "متصل بالبث المباشر"
+        connected_stream: "متصل بالبث المباشر",
+        news_ticker_badge: "أخبار"
       },
       en: {
         choose_lang: "Choose your language",
@@ -421,7 +464,8 @@
         timer: "Sleep Timer",
         stop_btn: "Stop",
         languages: "Languages",
-        connected_stream: "Live stream connected"
+        connected_stream: "Live stream connected",
+        news_ticker_badge: "NEWS"
       }
     };
 
@@ -507,10 +551,10 @@
       {"title": "Chada FM", "url": "https://edge16.vedge.infomaniak.com/livecast/ik:chadatv/chunklist_.m3u8", "cat": "featured,music", "logo": "/chada-fm.svg"},
 
       // 🌍 Arabic
-      {"title": "Monte Carlo Doualiya", "url": "https://montecarlodoualiya128k.ice.infomaniak.ch/mc-doualiya.mp3", "cat": "arabic,news", "logo": "missing-logo.png"},
-      {"title": "Radio France Maghreb 2", "url": "https://francemaghreb2.ice.infomaniak.ch/francemaghreb2-high.mp3", "cat": "arabic", "logo": "missing-logo.png"},
-      {"title": "Radio Aljalia", "url": "https://a9.asurahosting.com:8750/radio.mp3", "cat": "arabic", "logo": "missing-logo.png"},
-      {"title": "Radio Joussour", "url": "https://stream-153.zeno.fm/heepkvo1lfavv", "cat": "arabic", "logo": "missing-logo.png"},
+      {"title": "Monte Carlo Doualiya", "url": "https://montecarlodoualiya128k.ice.infomaniak.ch/mc-doualiya.mp3", "cat": "arabic,news", "logo": "/app-logo.svg"},
+      {"title": "Radio France Maghreb 2", "url": "https://francemaghreb2.ice.infomaniak.ch/francemaghreb2-high.mp3", "cat": "arabic", "logo": "/app-logo.svg"},
+      {"title": "Radio Aljalia", "url": "https://a9.asurahosting.com:8750/radio.mp3", "cat": "arabic", "logo": "/app-logo.svg"},
+      {"title": "Radio Joussour", "url": "https://stream-153.zeno.fm/heepkvo1lfavv.mp3", "cat": "arabic", "logo": "/app-logo.svg"},
 
       // 🎵 Music
       {"title": "Hit Radio Party", "url": "https://dancefloor.ice.infomaniak.ch/dancefloor-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
@@ -518,29 +562,30 @@
       {"title": "Hit Radio Gold", "url": "https://gold.ice.infomaniak.ch/gold-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
       {"title": "Hit Radio Classique", "url": "https://classique.ice.infomaniak.ch/classique-128.mp3", "cat": "music", "logo": "https://www.hitradio.ma/themes/custom/hitradio/logo.svg"},
       {"title": "Only Raï", "url": "https://onlyrai.ice.infomaniak.ch/onlyrai-high.mp3", "cat": "music", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2N4R76qjEqH09v5K2R2O537w93sX1l51L3Q&s"},
-      {"title": "Radio Gnawa", "url": "https://stream-175.zeno.fm/wghcdfwvnc9uv", "cat": "music", "logo": "missing-logo.png"},
+      {"title": "Radio Gnawa", "url": "https://stream-175.zeno.fm/wghcdfwvnc9uv.mp3", "cat": "music", "logo": "/app-logo.svg"},
+      {"title": "راديو عبد الحليم حافظ", "url": "https://stream.zeno.fm/g9w6v1d73tzuv.mp3", "cat": "music,arabic", "logo": "https://images.zeno.fm/stations/g9w6v1d73tzuv/image"},
       {"title": "Skyrock Casablanca", "url": "https://icecast.skyrock.net/s/casa_aac_64k", "cat": "music", "logo": "https://upload.wikimedia.org/wikipedia/commons/4/41/Skyrock.svg"},
 
       // ♓ Amazigh
-      {"title": "Radio Al Amazighia", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_amazigh/hls_snrt_radio/index.m3u8", "cat": "amazigh", "logo": "missing-logo.png"},
-      {"title": "Radio Atbir", "url": "https://stream-154.zeno.fm/bqdbb6hd0neuv", "cat": "amazigh", "logo": "missing-logo.png"},
-      {"title": "Radio Izlan", "url": "https://izlan.fr/radios/atlas/stream", "cat": "amazigh", "logo": "missing-logo.png"},
-      {"title": "Yabiladi Azawan Amazigh", "url": "https://radio.garden/api/ara/content/listen/v-fSUXiq/channel.mp3", "cat": "amazigh", "logo": "missing-logo.png"},
+      {"title": "Radio Al Amazighia", "url": "https://cdn-globecast.akamaized.net/live/eds/radio_amazigh/hls_snrt_radio/index.m3u8", "cat": "amazigh", "logo": "/app-logo.svg"},
+      {"title": "Radio Atbir", "url": "https://stream-154.zeno.fm/bqdbb6hd0neuv.mp3", "cat": "amazigh", "logo": "/app-logo.svg"},
+      {"title": "Radio Izlan", "url": "https://izlan.fr/radios/atlas/stream", "cat": "amazigh", "logo": "/app-logo.svg"},
+      {"title": "Yabiladi Azawan Amazigh", "url": "https://radio.garden/api/ara/content/listen/v-fSUXiq/channel.mp3", "cat": "amazigh", "logo": "/app-logo.svg"},
 
       // 🕌 Religious
       {"title": "Radio Coran", "url": "https://virmach2.hajjam.net/index.html", "cat": "religious", "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8r0_3_W7Hs4NVzPog2MoNjyAx6L-Mgi1O1iwbZduMPQ&s=10"},
-      {"title": "Assadissa (Mohammed 6)", "url": "https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_6/hls_snrt_radio/index.m3u8", "cat": "religious", "logo": "missing-logo.png"},
-      {"title": "Samaa Radio", "url": "https://stream-159.zeno.fm/nezfuswpyjfuv", "cat": "religious", "logo": "missing-logo.png"},
+      {"title": "Assadissa (Mohammed 6)", "url": "https://cdnamd-hls-globecast.akamaized.net/live/ramdisk/radio_mohammed_6/hls_snrt_radio/index.m3u8", "cat": "religious", "logo": "/app-logo.svg"},
+      {"title": "Samaa Radio", "url": "https://stream-159.zeno.fm/nezfuswpyjfuv.mp3", "cat": "religious", "logo": "/app-logo.svg"},
 
       // 📍 Cities / News
       {"title": "Cap Radio (Tanger)", "url": "https://listen.radioking.com/radio/710810/stream/776366", "cat": "cities", "logo": "https://www.capradio.ma/wp-content/uploads/2020/06/logo-capradio.png"},
-      {"title": "Radio Tanger Med", "url": "https://radiotangermed-22.ice.infomaniak.ch/radiotangermed-22-128.mp3", "cat": "cities", "logo": "missing-logo.png"},
-      {"title": "Yan Plus (Agadir)", "url": "https://stream-155.zeno.fm/7nqu31p6xg0uv", "cat": "cities", "logo": "/radio-plus.svg"},
+      {"title": "Radio Tanger Med", "url": "https://radiotangermed-22.ice.infomaniak.ch/radiotangermed-22-128.mp3", "cat": "cities", "logo": "/app-logo.svg"},
+      {"title": "Yan Plus (Agadir)", "url": "https://stream-155.zeno.fm/7nqu31p6xg0uv.mp3", "cat": "cities", "logo": "/radio-plus.svg"},
       {"title": "Marrakech Plus", "url": "https://cast5.my-control-panel.com/proxy/marrakec/stream", "cat": "cities", "logo": "/radio-plus.svg"},
-      {"title": "RMN (Radio Maroc News)", "url": "https://stream-149.zeno.fm/nefhp3q9fc9uv", "cat": "cities,news", "logo": "missing-logo.png"},
-      {"title": "RIM Radio", "url": "https://streaming.rimradio.ma/live", "cat": "news", "logo": "missing-logo.png"},
+      {"title": "RMN (Radio Maroc News)", "url": "https://stream-149.zeno.fm/nefhp3q9fc9uv.mp3", "cat": "cities,news", "logo": "/app-logo.svg"},
+      {"title": "RIM Radio", "url": "https://streaming.rimradio.ma/live", "cat": "news", "logo": "/app-logo.svg"},
       {"title": "RFI Monde", "url": "https://rfimonde64k.ice.infomaniak.ch/rfimonde-64.mp3", "cat": "news", "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RFI_logo_2013.svg/1200px-RFI_logo_2013.svg.png"},
-      {"title": "Al Jazeera", "url": "https://live-hls-web-aja.getaj.net/AJA/index.m3u8", "cat": "news,arabic", "logo": "https://www.aljazeera.net/static/media/aj-footer-logo.bac952ad.svg"}
+      {"title": "Al Jazeera", "url": "https://live-hls-audio-web-aja.getaj.net/VOICE-AJA/index.m3u8", "cat": "news,arabic", "logo": "https://www.aljazeera.net/static/media/aj-footer-logo.bac952ad.svg"}
     ];
 
     let favorites = JSON.parse(localStorage.getItem('arij_radio_favorites')) || [];
@@ -580,23 +625,53 @@
       document.getElementById('local-clock').textContent = timeString;
     }
 
-    function updateGreeting() {
-      const now = new Date();
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const timeInHours = hour + minute / 60;
+    let cachedNews = {
+      fr: null,
+      ar: null,
+      en: null,
+      timestamp: 0
+    };
+
+    async function updateGreeting() {
+      const now = Date.now();
+      const CACHE_MINS = 15;
       
-      let message = "";
-      const t = translations[currentLang];
-      if (timeInHours >= 7 && timeInHours <= 12) {
-        message = t.good_morning;
-      } else if (timeInHours > 12 && timeInHours <= 19) {
-        message = t.good_afternoon;
-      } else {
-        message = t.good_night;
+      let feedUrl = 'https://www.hespress.com/feed'; // ar
+      if (currentLang === 'fr') feedUrl = 'https://fr.hespress.com/feed';
+      if (currentLang === 'en') feedUrl = 'https://en.hespress.com/feed';
+      
+      const greetingText = document.getElementById('greeting-text');
+      
+      try {
+        if (!cachedNews[currentLang] || (now - cachedNews.timestamp > CACHE_MINS * 60 * 1000)) {
+          const res = await fetch(feedUrl);
+          const xmlText = await res.text();
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+          const items = Array.from(xmlDoc.querySelectorAll("item")).slice(0, 15);
+          
+          let newsHtml = items.map(item => {
+            const title = item.querySelector("title")?.textContent || "";
+            const link = item.querySelector("link")?.textContent || "#";
+            return `<a href="${link}" target="_blank" class="hover:text-white transition-colors mx-8 hover:underline">${title}</a>`;
+          }).join('<span class="text-[#e5b84b] font-bold select-none mx-2">|</span>');
+          
+          cachedNews[currentLang] = newsHtml;
+          cachedNews.timestamp = now;
+        }
+
+        if (greetingText.innerHTML !== cachedNews[currentLang]) {
+          greetingText.innerHTML = cachedNews[currentLang];
+        }
+      } catch (err) {
+        console.error("Failed to fetch news:", err);
+        // Fallback
+        const t = translations[currentLang];
+        const fallbackHtml = `<span class="mx-8">${t.good_morning}</span><span class="text-[#e5b84b] font-bold mx-2">|</span><span class="mx-8">${t.good_afternoon}</span><span class="text-[#e5b84b] font-bold mx-2">|</span><span class="mx-8">${t.good_night}</span>`;
+        if (greetingText.innerHTML !== fallbackHtml) {
+          greetingText.innerHTML = fallbackHtml;
+        }
       }
-      
-      greetingText.textContent = message;
     }
 
     // Toggle Favorite
@@ -619,31 +694,7 @@
     // Image fallback function
     window.handleImageError = function(img, title) {
       img.onerror = null; // Prevent infinite loop
-      img.classList.remove('mix-blend-multiply'); // Ensure canvas background and text colors are preserved
-      
-      const canvas = document.createElement('canvas');
-      canvas.width = 512;
-      canvas.height = 512;
-      const ctx = canvas.getContext('2d');
-      
-      const colorIndex = title ? (title.length * 7) % bgColors.length : 0;
-      
-      ctx.fillStyle = bgColors[colorIndex];
-      ctx.fillRect(0, 0, 512, 512);
-      
-      let initial = 'R';
-      if (title && title.length > 0) {
-        const words = title.split(' ').filter(w => w.toLowerCase() !== 'radio' && w.length > 0);
-        initial = words.length > 0 ? words[0][0].toUpperCase() : title[0].toUpperCase();
-      }
-      
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 256px Inter, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(initial, 256, 276); // Slight visual adjustment
-      
-      img.src = canvas.toDataURL('image/png');
+      img.src = '/app-logo.svg';
     };
 
     // Render Stations
@@ -729,7 +780,6 @@
       
       audio.pause();
       audio.removeAttribute('src');
-      audio.load();
 
       const playCurrent = () => {
         audio.play().then(() => {
@@ -743,20 +793,32 @@
         });
       };
 
+      const handleError = () => {
+        playerStatus.innerHTML = `<span class="text-rose-400">${translations[currentLang].error_stream}</span>`;
+        isPlaying = false;
+        updatePlayerUI();
+      };
+      
+      audio.removeEventListener('error', handleError);
+      audio.addEventListener('error', handleError);
+
       if (station.url.includes('.m3u8')) {
-        if (Hls.isSupported()) {
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const canPlayNative = audio.canPlayType('application/vnd.apple.mpegurl');
+        
+        if (canPlayNative && (isSafari || !Hls.isSupported())) {
+          audio.src = station.url;
+          audio.addEventListener('loadedmetadata', playCurrent, { once: true });
+        } else if (Hls.isSupported()) {
           hls = new Hls();
           hls.loadSource(station.url);
           hls.attachMedia(audio);
           hls.on(Hls.Events.MANIFEST_PARSED, playCurrent);
           hls.on(Hls.Events.ERROR, function(event, data) {
             if (data.fatal) {
-              playerStatus.innerHTML = `<span class="text-rose-400">${translations[currentLang].error_stream}</span>`;
+              handleError();
             }
           });
-        } else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
-          audio.src = station.url;
-          audio.addEventListener('loadedmetadata', playCurrent, { once: true });
         }
       } else {
         audio.src = station.url;
@@ -787,7 +849,7 @@
         
         if ('mediaSession' in navigator) {
           let logoSrc = currentStation.logo;
-          if (logoSrc === 'missing-logo.png' || logoSrc.startsWith('/')) {
+          if (logoSrc === '/app-logo.svg' || logoSrc.startsWith('/')) {
             logoSrc = window.location.origin + (logoSrc.startsWith('/') ? logoSrc : '/' + logoSrc);
           }
           navigator.mediaSession.metadata = new MediaMetadata({
@@ -821,7 +883,6 @@
       if (!currentStation) return;
       audio.pause();
       audio.removeAttribute('src');
-      audio.load();
       if (hls) {
         hls.destroy();
         hls = null;
