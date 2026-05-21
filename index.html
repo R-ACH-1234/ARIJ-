@@ -218,6 +218,11 @@
         <button onclick="testAlarmAudio()" id="alarm-test-btn" class="w-full py-1.5 bg-[#e5b84b]/10 hover:bg-[#e5b84b]/20 border border-[#e5b84b]/20 hover:border-[#e5b84b]/40 text-[#e5b84b] font-medium text-xs rounded-lg transition-all" data-i18n="alarm_test_btn">Tester & Débloquer l'audio 🔊</button>
       </div>
 
+      <!-- Anti-sleep Instruction warning -->
+      <div class="bg-amber-500/10 rounded-xl p-3 border border-amber-500/20 flex flex-col gap-1 text-center">
+        <p class="text-[10px] text-amber-300 font-medium leading-relaxed" data-i18n="alarm_bg_warning">⚠️ Pour que le réveil fonctionne : gardez l'application ouverte, laissez le smartphone branché. Le mode anti-veille maintiendra l'application active.</p>
+      </div>
+
       <div class="flex gap-3 mt-1">
         <button onclick="document.getElementById('alarm-modal').classList.add('hidden')" class="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-all font-medium border border-white/10" data-i18n="close">Fermer</button>
         <button onclick="saveAlarmSettings()" class="flex-1 py-2.5 bg-[#e5b84b] hover:bg-[#c79a32] text-black font-semibold rounded-xl transition-all shadow-lg shadow-[#e5b84b]/10" data-i18n="alarm_save">Enregistrer</button>
@@ -475,7 +480,8 @@
         alarm_active_title: "Debout !",
         alarm_play_manual: "Jouer le flux de réveil 📻",
         alarm_test_btn: "Tester & Débloquer l'audio 🔊",
-        alarm_test_info: "Les navigateurs bloquent la lecture automatique. Veuillez tester l'audio pour l'autoriser."
+        alarm_test_info: "Les navigateurs bloquent la lecture automatique. Veuillez tester l'audio pour l'autoriser.",
+        alarm_bg_warning: "⚠️ Pour que le réveil fonctionne écran éteint : ne fermez pas l'onglet, laissez le smartphone branché. Le mode anti-veille maintiendra l'application active."
       },
       ar: {
         choose_lang: "اختر لغتك",
@@ -525,7 +531,8 @@
         alarm_active_title: "استيقظ !",
         alarm_play_manual: "تشغيل إذاعة المنبه يدوياً 📻",
         alarm_test_btn: "تجربة وتفعيل الصوت 🔊",
-        alarm_test_info: "تمنع المتصفحات تشغيل الصوت تلقائياً. يرجى تجربة الصوت هنا لترخيص تشغيله."
+        alarm_test_info: "تمنع المتصفحات تشغيل الصوت تلقائياً. يرجى تجربة الصوت هنا لترخيص تشغيله.",
+        alarm_bg_warning: "⚠️ لضمان اشتغال المنبه عند قفل الهاتف: يرجى إبقاء هذه الصفحة مفتوحة، وتوصيل الهاتف بالشاحن. سيبقي وضع منع الخمول الهاتف في حالة تأهب."
       },
       en: {
         choose_lang: "Choose your language",
@@ -575,7 +582,8 @@
         alarm_active_title: "Wake Up !",
         alarm_play_manual: "Play Wake-up Station Manually 📻",
         alarm_test_btn: "Test & Unlock Audio 🔊",
-        alarm_test_info: "Browsers block automatic playback. Please test audio once to authorize."
+        alarm_test_info: "Browsers block automatic playback. Please test audio once to authorize.",
+        alarm_bg_warning: "⚠️ For guaranteed alarm: keep this tab open, plug in your charger. Anti-sleep mode will keep the application active."
       }
     };
 
@@ -774,6 +782,95 @@
     document.addEventListener('click', unlockAudio, { once: true });
     document.addEventListener('touchstart', unlockAudio, { once: true });
 
+    // Anti-suspension keep-alive system to let alarm play even when phone is locked/asleep
+    let keepAliveAudioCtx = null;
+    let keepAliveSource = null;
+    let wakeLock = null;
+
+    async function requestWakeLock() {
+      if ('wakeLock' in navigator && alarmEnabled) {
+        try {
+          if (wakeLock) await wakeLock.release();
+          wakeLock = await navigator.wakeLock.request('screen');
+          console.log('Screen Wake Lock acquired successfully');
+        } catch (err) {
+          console.warn(`Screen Wake Lock failed: ${err.message}`);
+        }
+      }
+    }
+
+    function releaseWakeLock() {
+      if (wakeLock) {
+        wakeLock.release().then(() => {
+          wakeLock = null;
+          console.log('Screen Wake Lock released');
+        }).catch(() => {});
+      }
+    }
+
+    function startKeepAliveAudio() {
+      if (!alarmEnabled) return;
+      if (keepAliveAudioCtx) return;
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        keepAliveAudioCtx = new AudioContext();
+        
+        // Create 2 seconds of silence buffer
+        const buffer = keepAliveAudioCtx.createBuffer(1, keepAliveAudioCtx.sampleRate * 2, keepAliveAudioCtx.sampleRate);
+        const channelData = buffer.getChannelData(0);
+        for (let i = 0; i < channelData.length; i++) {
+          channelData[i] = 0.0;
+        }
+        
+        keepAliveSource = keepAliveAudioCtx.createBufferSource();
+        keepAliveSource.buffer = buffer;
+        keepAliveSource.loop = true;
+        keepAliveSource.connect(keepAliveAudioCtx.destination);
+        keepAliveSource.start(0);
+        console.log("Keep-alive silent audio loop active to maintain thread executing in background/lock screen.");
+      } catch (e) {
+        console.warn("Could not start background keep-alive audio context:", e);
+      }
+    }
+
+    function stopKeepAliveAudio() {
+      if (keepAliveSource) {
+        try { keepAliveSource.stop(); } catch(e){}
+        keepAliveSource = null;
+      }
+      if (keepAliveAudioCtx) {
+        try { keepAliveAudioCtx.close(); } catch(e){}
+        keepAliveAudioCtx = null;
+      }
+      console.log("Keep-alive silent audio stopped.");
+    }
+
+    window.updateAlarmKeepAlive = function() {
+      if (alarmEnabled) {
+        startKeepAliveAudio();
+        requestWakeLock();
+      } else {
+        stopKeepAliveAudio();
+        releaseWakeLock();
+      }
+    };
+
+    // Re-acquire lock if page visibility returns
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && alarmEnabled) {
+        requestWakeLock();
+      }
+    });
+
+    // Touch and click unlockers (required by mobile modern browsers to let audio play in background)
+    const gestureListener = () => {
+      if (alarmEnabled) {
+        window.updateAlarmKeepAlive();
+      }
+    };
+    document.addEventListener('click', gestureListener, { passive: true });
+    document.addEventListener('touchstart', gestureListener, { passive: true });
+
     window.testAlarmAudio = function() {
       const selectVal = document.getElementById('alarm-station-select').value;
       const station = radioStations.find(s => s.title === selectVal) || radioStations[0];
@@ -811,8 +908,11 @@
       alarmFiredToday = false;
       window.updateAlarmButtonState();
       
-      // Perform an audio unlock cycle on this save gesture to confirm browser permission
+      // Perform an audio unlock cycle and start the keep-alive / screen wake-lock
       unlockAudio();
+      if (typeof window.updateAlarmKeepAlive === 'function') {
+        window.updateAlarmKeepAlive();
+      }
       
       document.getElementById('alarm-modal').classList.add('hidden');
     };
