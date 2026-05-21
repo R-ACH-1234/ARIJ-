@@ -185,6 +185,66 @@
     </div>
   </div>
 
+  <!-- Alarm Settings Modal -->
+  <div id="alarm-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden" onclick="if(event.target===this) this.classList.add('hidden')">
+    <div class="glass p-6 rounded-2xl border border-white/10 max-w-sm w-full mx-4 flex flex-col gap-4" dir="ltr">
+      <div class="text-center mb-1">
+        <h2 class="text-xl font-bold text-white mb-1" data-i18n="alarm_title">Alarme de Réveil</h2>
+      </div>
+      
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs text-gray-400 font-medium" data-i18n="alarm_time">Heure du réveil</label>
+        <input type="time" id="alarm-time-input" class="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-xl text-center focus:outline-none focus:border-[#e5b84b]/50 select-none w-full" style="color-scheme: dark;">
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs text-gray-400 font-medium" data-i18n="alarm_station">Radio pour le réveil</label>
+        <select id="alarm-station-select" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-[#e5b84b]/50 w-full" style="color-scheme: dark;">
+          <!-- Stations dynamically listed here -->
+        </select>
+      </div>
+
+      <div class="flex items-center justify-between py-2 border-t border-b border-white/5 my-1">
+        <span class="text-white text-sm" data-i18n="alarm">Activer l'alarme</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="alarm-enable-checkbox" class="sr-only peer">
+          <div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#e5b84b]"></div>
+        </label>
+      </div>
+
+      <!-- Test Audio / Unlock Playback Authorization Section -->
+      <div class="bg-white/5 rounded-xl p-3 border border-white/5 flex flex-col gap-2">
+        <p class="text-[10px] text-gray-400 text-center leading-relaxed" data-i18n="alarm_test_info">Les navigateurs bloquent la lecture automatique. Veuillez tester l'audio pour l'autoriser.</p>
+        <button onclick="testAlarmAudio()" id="alarm-test-btn" class="w-full py-1.5 bg-[#e5b84b]/10 hover:bg-[#e5b84b]/20 border border-[#e5b84b]/20 hover:border-[#e5b84b]/40 text-[#e5b84b] font-medium text-xs rounded-lg transition-all" data-i18n="alarm_test_btn">Tester & Débloquer l'audio 🔊</button>
+      </div>
+
+      <div class="flex gap-3 mt-1">
+        <button onclick="document.getElementById('alarm-modal').classList.add('hidden')" class="flex-1 py-2.5 bg-white/5 hover:bg-white/10 text-white rounded-xl transition-all font-medium border border-white/10" data-i18n="close">Fermer</button>
+        <button onclick="saveAlarmSettings()" class="flex-1 py-2.5 bg-[#e5b84b] hover:bg-[#c79a32] text-black font-semibold rounded-xl transition-all shadow-lg shadow-[#e5b84b]/10" data-i18n="alarm_save">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alarm Ringing Modal -->
+  <div id="alarm-ringing-modal" class="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 backdrop-blur-md hidden">
+    <div class="glass p-8 rounded-2xl border border-[#e5b84b]/50 max-w-sm w-full mx-4 flex flex-col items-center gap-6 text-center">
+      <div class="w-16 h-16 bg-[#e5b84b]/10 rounded-full flex items-center justify-center border border-[#e5b84b]/40 animate-bounce">
+        <svg class="w-8 h-8 text-[#e5b84b] animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-white mb-2 animate-pulse" data-i18n="alarm_active_title">Debout !</h2>
+        <p id="alarm-ringing-station-title" class="text-[#e5b84b] font-semibold text-lg"></p>
+      </div>
+      
+      <div class="w-full flex flex-col gap-2.5">
+        <button onclick="playStationFromAlarm()" class="w-full py-2.5 bg-[#e5b84b]/20 hover:bg-[#e5b84b]/30 border border-[#e5b84b]/30 text-[#e5b84b] font-semibold rounded-xl text-sm transition-all flex items-center justify-center gap-2" data-i18n="alarm_play_manual">Jouer le flux de réveil 📻</button>
+        <button onclick="dismissAlarm()" class="w-full py-3 bg-gradient-to-r from-[#e5b84b] to-[#c79a32] text-black font-bold rounded-xl transition-all select-none hover:scale-105 active:scale-95 shadow-lg shadow-[#e5b84b]/20" data-i18n="stop_btn">Arrêter</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Decorative Glow -->
   <div class="glow-orb" style="top: -100px; left: -100px;"></div>
   <div class="glow-orb" style="bottom: -100px; right: -100px;"></div>
@@ -332,7 +392,12 @@
           </div>
         </div>
 
-        <div class="shrink-0 md:flex-1 md:w-1/4 flex items-center justify-end rtl:justify-start gap-1 md:gap-4 min-w-0 pl-1 md:pl-0">
+        <div class="shrink-0 md:flex-1 md:w-1/4 flex items-center justify-end rtl:justify-start gap-1 md:gap-2.5 min-w-0 pl-1 md:pl-0">
+          <button id="alarm-btn" onclick="openAlarmModal()" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" data-i18n-title="alarm">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+            <span id="alarm-display" class="font-medium hidden sm:inline-block" data-i18n="alarm_short">Réveil</span>
+          </button>
+
           <button id="sleep-timer-btn" onclick="openSleepTimerModal()" class="flex items-center gap-1 text-[10px] md:text-xs text-gray-500 hover:text-[#e5b84b] transition-colors bg-white/5 hover:bg-white/10 px-2 py-1.5 md:px-2.5 rounded-lg border border-white/10" data-i18n-title="timer">
             <svg id="sleep-timer-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <span id="sleep-timer-display" class="font-medium hidden sm:inline-block" data-i18n="timer_short">Minut.</span>
@@ -384,7 +449,7 @@
         connecting: "Connexion...",
         listen: "Écouter",
         stopped: "Arrêté",
-        error_play: "Erreur de lecture",
+        error_play: "Lecture bloquée ou impossible. Cliquez sur la page pour l'autoriser 🔊",
         error_stream: "Erreur de flux",
         no_radio_found: "Aucune radio trouvée.",
         good_morning: "Bonjour de Arij ☀️",
@@ -395,7 +460,22 @@
         stop_btn: "Arrêter",
         languages: "Langues",
         connected_stream: "Flux en direct connecté",
-        news_ticker_badge: "INFO"
+        news_ticker_badge: "INFO",
+        sleep_timer_title: "Mise en veille",
+        sleep_timer_off: "Désactiver",
+        close: "Fermer",
+        alarm: "Alarme de Réveil",
+        alarm_short: "Réveil",
+        alarm_title: "Alarme de Réveil",
+        alarm_station: "Radio pour le réveil",
+        alarm_time: "Heure du réveil",
+        alarm_status_on: "Activée",
+        alarm_status_off: "Désactivée",
+        alarm_save: "Enregistrer",
+        alarm_active_title: "Debout !",
+        alarm_play_manual: "Jouer le flux de réveil 📻",
+        alarm_test_btn: "Tester & Débloquer l'audio 🔊",
+        alarm_test_info: "Les navigateurs bloquent la lecture automatique. Veuillez tester l'audio pour l'autoriser."
       },
       ar: {
         choose_lang: "اختر لغتك",
@@ -419,7 +499,7 @@
         connecting: "جاري الاتصال...",
         listen: "استمع",
         stopped: "متوقف",
-        error_play: "خطأ في التشغيل",
+        error_play: "تعذر التشغيل تلقائياً. المرجو الضغط على الصفحة لتفعيل الصوت 🔊",
         error_stream: "خطأ في البث",
         no_radio_found: "لم يتم العثور على إذاعة.",
         good_morning: "صباح الخير من أريج ☀️",
@@ -430,7 +510,22 @@
         stop_btn: "إيقاف",
         languages: "اللغات",
         connected_stream: "متصل بالبث المباشر",
-        news_ticker_badge: "أخبار"
+        news_ticker_badge: "أخبار",
+        sleep_timer_title: "مؤقت النوم",
+        sleep_timer_off: "إيقاف المؤقت",
+        close: "إغلاق",
+        alarm: "منبه الإستيقاظ",
+        alarm_short: "المنبه",
+        alarm_title: "منبه الإستيقاظ",
+        alarm_station: "الإذاعة المختارة للمنبه",
+        alarm_time: "وقت المنبه",
+        alarm_status_on: "مفعل",
+        alarm_status_off: "غير مفعل",
+        alarm_save: "حفظ",
+        alarm_active_title: "استيقظ !",
+        alarm_play_manual: "تشغيل إذاعة المنبه يدوياً 📻",
+        alarm_test_btn: "تجربة وتفعيل الصوت 🔊",
+        alarm_test_info: "تمنع المتصفحات تشغيل الصوت تلقائياً. يرجى تجربة الصوت هنا لترخيص تشغيله."
       },
       en: {
         choose_lang: "Choose your language",
@@ -454,7 +549,7 @@
         connecting: "Connecting...",
         listen: "Listen",
         stopped: "Stopped",
-        error_play: "Playback error",
+        error_play: "Playback blocked. Please click anywhere on the page to allow sound 🔊",
         error_stream: "Stream error",
         no_radio_found: "No radio found.",
         good_morning: "Good morning from Arij ☀️",
@@ -465,7 +560,22 @@
         stop_btn: "Stop",
         languages: "Languages",
         connected_stream: "Live stream connected",
-        news_ticker_badge: "NEWS"
+        news_ticker_badge: "NEWS",
+        sleep_timer_title: "Sleep Timer",
+        sleep_timer_off: "Turn Off Timer",
+        close: "Close",
+        alarm: "Wake-up Alarm",
+        alarm_short: "Alarm",
+        alarm_title: "Wake-up Alarm",
+        alarm_station: "Wake-up Radio Station",
+        alarm_time: "Alarm Time",
+        alarm_status_on: "Enabled",
+        alarm_status_off: "Disabled",
+        alarm_save: "Save",
+        alarm_active_title: "Wake Up !",
+        alarm_play_manual: "Play Wake-up Station Manually 📻",
+        alarm_test_btn: "Test & Unlock Audio 🔊",
+        alarm_test_info: "Browsers block automatic playback. Please test audio once to authorize."
       }
     };
 
@@ -495,6 +605,10 @@
         } else {
           sectionTitle.textContent = t[cat] || activeCat.querySelector('span').textContent;
         }
+      }
+      
+      if (typeof window.updateAlarmButtonState === 'function') {
+        window.updateAlarmButtonState();
       }
     }
 
@@ -590,6 +704,244 @@
 
     let favorites = JSON.parse(localStorage.getItem('arij_radio_favorites')) || [];
 
+    // Alarm Clock Logic
+    let alarmTime = localStorage.getItem('arij_alarm_time') || "07:00";
+    let alarmEnabled = localStorage.getItem('arij_alarm_enabled') === 'true';
+    let alarmStationTitle = localStorage.getItem('arij_alarm_station') || (radioStations && radioStations[0] ? radioStations[0].title : "");
+    let alarmFiredToday = false;
+
+    window.updateAlarmButtonState = function() {
+      const alarmBtn = document.getElementById('alarm-btn');
+      const alarmDisplay = document.getElementById('alarm-display');
+      if (!alarmBtn || !alarmDisplay) return;
+      
+      const t = translations[currentLang];
+      if (alarmEnabled) {
+        alarmDisplay.textContent = `${alarmTime}`;
+        alarmBtn.classList.remove('text-gray-500', 'bg-white/5', 'border-white/10');
+        alarmBtn.classList.add('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
+        alarmDisplay.classList.remove('hidden', 'sm:inline-block');
+      } else {
+        alarmDisplay.textContent = t.alarm_short;
+        alarmBtn.classList.remove('text-[#e5b84b]', 'bg-[#e5b84b]/15', 'border-[#e5b84b]/30');
+        alarmBtn.classList.add('text-gray-500', 'bg-white/5', 'border-white/10');
+        alarmDisplay.classList.add('hidden', 'sm:inline-block');
+      }
+    };
+
+    window.openAlarmModal = function() {
+      const select = document.getElementById('alarm-station-select');
+      if (select) {
+        select.innerHTML = '';
+        radioStations.forEach(station => {
+          const opt = document.createElement('option');
+          opt.value = station.title;
+          opt.textContent = station.title;
+          if (station.title === alarmStationTitle) {
+            opt.selected = true;
+          }
+          select.appendChild(opt);
+        });
+      }
+      
+      const timeInput = document.getElementById('alarm-time-input');
+      const checkbox = document.getElementById('alarm-enable-checkbox');
+      
+      if (timeInput) timeInput.value = alarmTime;
+      if (checkbox) checkbox.checked = alarmEnabled;
+      
+      document.getElementById('alarm-modal').classList.remove('hidden');
+    };
+
+    // Global gesture unlocker
+    const unlockAudio = () => {
+      if (audio) {
+        const originalSrc = audio.src;
+        audio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==';
+        audio.play().then(() => {
+          audio.pause();
+          if (originalSrc) {
+            audio.src = originalSrc;
+          } else {
+            audio.removeAttribute('src');
+          }
+          console.log("Audio player pre-unlocked successfully via user action.");
+        }).catch(err => {
+          console.log("Failed to pre-unlock audio player:", err);
+        });
+      }
+    };
+    document.addEventListener('click', unlockAudio, { once: true });
+    document.addEventListener('touchstart', unlockAudio, { once: true });
+
+    window.testAlarmAudio = function() {
+      const selectVal = document.getElementById('alarm-station-select').value;
+      const station = radioStations.find(s => s.title === selectVal) || radioStations[0];
+      if (station) {
+        playStation(station);
+        
+        const btn = document.getElementById('alarm-test-btn');
+        if (btn) {
+          const originalText = btn.textContent;
+          btn.textContent = currentLang === 'ar' ? '🔊 الصوت يعمل!' : '🔊 Audio Okay!';
+          btn.classList.add('bg-emerald-500/25', 'text-emerald-400', 'border-emerald-500/30');
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('bg-emerald-500/25', 'text-emerald-400', 'border-emerald-500/30');
+          }, 4000);
+        }
+      }
+    };
+
+    window.saveAlarmSettings = function() {
+      const timeVal = document.getElementById('alarm-time-input').value;
+      const selectVal = document.getElementById('alarm-station-select').value;
+      const enabledVal = document.getElementById('alarm-enable-checkbox').checked;
+      
+      if (!timeVal) return;
+      
+      alarmTime = timeVal;
+      alarmStationTitle = selectVal;
+      alarmEnabled = enabledVal;
+      
+      localStorage.setItem('arij_alarm_time', timeVal);
+      localStorage.setItem('arij_alarm_station', selectVal);
+      localStorage.setItem('arij_alarm_enabled', enabledVal.toString());
+      
+      alarmFiredToday = false;
+      window.updateAlarmButtonState();
+      
+      // Perform an audio unlock cycle on this save gesture to confirm browser permission
+      unlockAudio();
+      
+      document.getElementById('alarm-modal').classList.add('hidden');
+    };
+
+    let alarmSynthInterval = null;
+    let audioCtx = null;
+
+    function playBeep(frequency, duration) {
+      if (!audioCtx) {
+        try {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContext();
+        } catch (e) {
+          console.error("Web Audio API not supported", e);
+          return;
+        }
+      }
+      try {
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        osc.type = 'sine';
+        osc.frequency.value = frequency;
+        
+        gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.error("Error playing beep", e);
+      }
+    }
+
+    window.startAlarmBuzzer = function() {
+      if (alarmSynthInterval) return;
+      
+      alarmSynthInterval = setInterval(() => {
+        if (!alarmEnabled) {
+          window.stopAlarmBuzzer();
+          return;
+        }
+        
+        // Play wake-up alarm sequence: double beep every second
+        playBeep(880, 0.12);
+        setTimeout(() => {
+          if (alarmSynthInterval) {
+            playBeep(880, 0.12);
+          }
+        }, 180);
+      }, 1000);
+    };
+
+    window.stopAlarmBuzzer = function() {
+      if (alarmSynthInterval) {
+        clearInterval(alarmSynthInterval);
+        alarmSynthInterval = null;
+      }
+      if (audioCtx) {
+        audioCtx.close().catch(() => {});
+        audioCtx = null;
+      }
+    };
+
+    window.playStationFromAlarm = function() {
+      const station = radioStations.find(s => s.title === alarmStationTitle) || radioStations[0];
+      if (station) {
+        playStation(station);
+      }
+    };
+
+    window.checkAlarm = function(now) {
+      if (!alarmEnabled) return;
+      
+      const hr = now.getHours();
+      const mn = now.getMinutes();
+      
+      const parts = alarmTime.split(':');
+      if (parts.length !== 2) return;
+      
+      const alarmHr = parseInt(parts[0], 10);
+      const alarmMn = parseInt(parts[1], 10);
+      
+      // Convert to minutes from midnight
+      const nowMins = hr * 60 + mn;
+      const alarmMins = alarmHr * 60 + alarmMn;
+      
+      const diff = nowMins - alarmMins;
+      
+      // If we are precisely in the 5-minute window after/during the alarm time
+      if (diff >= 0 && diff <= 5) {
+        const todayStr = now.toDateString();
+        const lastFiredDate = localStorage.getItem('arij_alarm_fired_date');
+        
+        if (lastFiredDate !== todayStr) {
+          localStorage.setItem('arij_alarm_fired_date', todayStr);
+          window.triggerAlarm();
+        }
+      }
+    };
+
+    window.triggerAlarm = function() {
+      const station = radioStations.find(s => s.title === alarmStationTitle) || radioStations[0];
+      if (station) {
+        // Attempt to play station
+        playStation(station);
+        
+        // Start local backup buzzer (insures we have clear sound immediately)
+        window.startAlarmBuzzer();
+        
+        const ringingModal = document.getElementById('alarm-ringing-modal');
+        const ringingTitle = document.getElementById('alarm-ringing-station-title');
+        if (ringingTitle) ringingTitle.textContent = station.title;
+        if (ringingModal) ringingModal.classList.remove('hidden');
+      }
+    };
+
+    window.dismissAlarm = function() {
+      const ringingModal = document.getElementById('alarm-ringing-modal');
+      if (ringingModal) ringingModal.classList.add('hidden');
+      window.stopAlarmBuzzer();
+    };
+
     let currentStation = null;
     let isPlaying = false;
     let hls = null;
@@ -623,6 +975,10 @@
         hour12: currentLang === 'en'
       });
       document.getElementById('local-clock').textContent = timeString;
+      
+      if (typeof checkAlarm === 'function') {
+        checkAlarm(now);
+      }
     }
 
     let cachedNews = {
@@ -1062,6 +1418,10 @@
     setInterval(updateGreeting, 60000);
     greetingCard.style.display = 'flex';
     renderStations();
+    
+    if (typeof window.updateAlarmButtonState === 'function') {
+      window.updateAlarmButtonState();
+    }
 
   </script>
 </body>
